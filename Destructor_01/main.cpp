@@ -22,3 +22,5 @@ public:
         cout<<"called destructor!"<<endl;
     }
 };
+
+// main
