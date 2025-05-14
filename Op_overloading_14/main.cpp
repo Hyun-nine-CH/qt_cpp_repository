@@ -32,8 +32,8 @@ public:
     }
 };
 int main(void) {
-    Person man1("Lee dong woo", 29);
-    Person man2("Yoon ji yul", 22);
+    Person man1("Micheal Jackson", 29);
+    Person man2("Adom Eve", 22);
     man2=man1;
     man1.ShowPersonInfo();
     man2.ShowPersonInfo();
