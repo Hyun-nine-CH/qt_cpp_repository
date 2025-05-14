@@ -28,9 +28,11 @@ int main() {
     Point::SetScreenSize(1024,768);
 }
 
+/*
 void Point::SetScreenSize(int xScreen, int yScreen) {
     s_xScreen=xScreen;
     s_yScreen=yScreen;
     cout<<m_x;
     Print();
 }
+*/
