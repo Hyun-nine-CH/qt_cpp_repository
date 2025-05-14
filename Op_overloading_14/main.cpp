@@ -21,6 +21,15 @@ public:
         delete []name;
         cout<<"called destructor!"<<endl;
     }
+
+    Person& operator=(const Person& ref) {
+        delete []name;
+        int len=strlen(ref.name)+1;
+        name=new char[len];
+        strcpy(name, ref.name);
+        age=ref.age;
+        return *this;
+    }
 };
 int main(void) {
     Person man1("Lee dong woo", 29);
@@ -30,3 +39,14 @@ int main(void) {
     man2.ShowPersonInfo();
     return 0;
 }
+
+/*
+Person& operator=(const Person& ref) {
+    delete []name;
+    int len=strlen(ref.name)+1;
+    name=new char[len];
+    strcpy(name, ref.name);
+    age=ref.age;
+    return *this;
+} 안죽도록 클래스에 넣어준다.
+*/
