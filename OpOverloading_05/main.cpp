@@ -18,7 +18,7 @@ public:
     friend Point& operator--(Point &ref);
 };
 
-Point& operator--(Point &ref) {
+Point& operator--(Point &ref) { // <- 리턴되는 게 다시 인자로 들어가서 -- 또는 ++
     ref.xpos-=1;
     ref.ypos-=1;
     return ref;
