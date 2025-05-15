@@ -7,4 +7,4 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
-    str.h
+    ConTest.h
