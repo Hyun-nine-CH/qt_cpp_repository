@@ -20,7 +20,7 @@ public:
 
 int main(void) {
     SoSimple sim1(100);
-    SoSimple *ptr1=sim1.GetThisPointer();
+    SoSimple *ptr1=sim1.GetThisPointer(); // sim1 객체의 주소값을 저장
     cout<<ptr1<<", ";
     ptr1->ShowSimpleData();
 

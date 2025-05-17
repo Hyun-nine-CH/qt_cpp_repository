@@ -8,6 +8,9 @@ protected:
 public:
     bool IsEquivalent(const X& object);
     bool IsSame(const X& object);
+    void Set(int data) { // 추가
+        m_data = data;
+    }
 };
 
 bool X::IsEquivalent(const X& object) {
@@ -20,7 +23,7 @@ bool X::IsSame(const X& object) {
 
 int main() {
     X obj1;
-    obj1.Set(100);
+    obj1.Set(100); // 가동
 
     X obj2 = obj1;
     if(obj1.IsSame(obj2))
