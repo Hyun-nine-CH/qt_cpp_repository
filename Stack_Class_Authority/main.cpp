@@ -19,10 +19,10 @@ int main()
 {
     Stack s1;
     s1.Initialize(5);
-//    s1.m_top=1;
+    s1.m_top=1;
     int data;
     s1.Pop(data);
-//    delete [] s1.m_buffer;
+    delete [] s1.m_buffer;
     s1.Push(123);
     return 0;
 }
