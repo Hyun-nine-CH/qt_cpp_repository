@@ -1,13 +1,13 @@
 #include "ModifyScore.h"
 
-void ModiSC::ShowMScore() {
+void ModiSC::ShowScore() {
     cout<<"점수: "<<Score<<endl;
 }
 
-void ModiSC::setMScore(const int s) {
+void ModiSC::setScore(const int s) {
     Score=s;
 }
 
-int ModiSC::getMScore() {
+int ModiSC::getScore() {
     return Score;
 }

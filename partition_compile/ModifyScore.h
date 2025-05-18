@@ -6,9 +6,9 @@ using namespace std;
 
 class ModiSC {
 public:
-    void ShowMScore();
-    void setMScore(const int s);
-    int getMScore();
+    void ShowScore();
+    void setScore(const int s);
+    int getScore();
 
 private:
     int Score;
