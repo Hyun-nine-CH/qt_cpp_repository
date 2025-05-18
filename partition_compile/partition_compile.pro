@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         IntSample.cpp \
+        ModifyScore.cpp \
         main.cpp
 
 HEADERS += \
-    IntSample.h
+    IntSample.h \
+    ModifyScore.h
