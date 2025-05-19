@@ -10,7 +10,9 @@ int main() {
     q.push(30);
     q.push(40);
 
-    for (int i=0; i<q.size(); ++i) {
+    int a = q.size();
+
+    for (int i=0; i<a; ++i) {
         cout<<q.front()<<" ";
         q.pop();
     }
