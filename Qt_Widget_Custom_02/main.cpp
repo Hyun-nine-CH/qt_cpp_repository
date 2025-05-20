@@ -1,0 +1,17 @@
+#include <QApplication>
+#include "widget.h"
+#include <QLabel>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    Widget w;
+
+    QObject::connect(&w, SIGNAL(clicked()), &a, SLOT(quit()));
+
+    QLabel *label = new QLabel("<font size=20>Hello, World!</font>",&w);
+    label->setGeometry(10,90,175,35);
+
+    w.show();
+    return a.exec();
+}
