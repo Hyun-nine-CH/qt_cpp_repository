@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&quit, &QPushButton::clicked,
                      &hello, [&](){hello.setText("<b>Hi</b>");});
-    w.show();
+    w.show(); // connect는 show 문 앞에 들어와도 괜찮음
 
     return a.exec();
 }
