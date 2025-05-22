@@ -8,8 +8,14 @@
 #include <QAction>
 #include <QApplication>
 #include <QKeySequence>
+#include <QToolBar>
 
-#include <QDialog>
+#include <QFontComboBox>
+#include <QDoubleSpinBox>
+
+//#include <QToolButton>
+#include <QLabel>
+#include <QStatusBar>
 
 class qt_editor : public QMainWindow
 {
@@ -46,4 +52,13 @@ private:
 public slots:
     void newFile();
 };
+
+/*
+void QtEditor::saveFile( ) {
+    QString filename = QFileDialog::getSaveFileName(this, "Select file to save",                                                                  ".", "Text File (*.txt *.html *.c *.cpp *.h)");
+    QTextEdit *textedit = (QTextEdit*)mdiArea->currentSubWindow( )->widget( );
+    windowHash.key(textedit)->setText(filename);
+}
+ */
+
 #endif // QT_EDITOR_H

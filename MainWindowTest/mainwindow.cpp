@@ -278,7 +278,9 @@ void QtEditor::openFile() {
     qDebug()<<filename;
 }
 
-void Q
+void QtEditor::saveFile() {
+    QString filename=QFileDialog::getSaveFileName(this,"Select file to save",)
+}
 
 MainWindow::~MainWindow() {}
 

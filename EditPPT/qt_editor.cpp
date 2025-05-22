@@ -31,6 +31,38 @@ qt_editor::qt_editor(QWidget *parent)
 //*/
     QMenu *fileMenu = menubar->addMenu("&File"); // addMenu() 메서드를 이용
     fileMenu->addAction(newAct);
+
+    fileMenu->addAction(quitAct);
+
+    QToolBar *fileToolBar = addToolBar("&File");
+    fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    fileToolBar->addAction(newAct);
+
+    fileToolBar->addSeparator();
+    fileToolBar->addAction(newAct);
+
+    QMenu *windowMenu=menubar->addMenu("&Window");
+    QMenu *toolbarMenu=windowMenu->addMenu("&Toolbar");
+    toolbarMenu->addAction(fileToolBar->toggleViewAction());
+
+    QFontComboBox*fontComboBox=new QFontComboBox(this);
+    connect(fontComboBox, SIGNAL(currentFontChanged(QFont)), textedit, SLOT(setCurrentFont(QFont)));
+    QDoubleSpinBox*sizeSpinBox=new QDoubleSpinBox(this);
+    connect(sizeSpinBox, SIGNAL(valueChanged(double)), textedit, SLOT(setFontPointSize(qreal)));
+
+    addToolBarBreak();
+    QToolBar *formatToolbar = addToolBar("&Format");
+
+    formatToolbar->addSeparator();
+    formatToolbar->addWidget(fontComboBox);
+    formatToolbar->addWidget(sizeSpinBox);
+
+    fileToolBar->addAction(quitAct);
+
+    QStatusBar *statusbar=statusBar();
+    QLabel*statusLabel=new QLabel(tr("Qt Editor"), statusbar);
+    statusbar->addPermanentWidget(statusLabel);
+    statusbar->showMessage("started",1500);
 }
 /*  //원형 슬롯 본문
 QAction *qt_editor::makeAction(QString icon, QString text, QString shortCut, \
