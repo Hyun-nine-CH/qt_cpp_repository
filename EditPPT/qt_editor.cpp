@@ -9,7 +9,7 @@ qt_editor::qt_editor(QWidget *parent)
     QMenuBar *menubar = new QMenuBar(this);
     setMenuBar(menubar);
 
-///*  // 원형 슬롯
+#if 0
     QAction *newAct = new QAction(QIcon("Icon_New_File.png"), "&New", this);
     newAct->setShortcut(tr("Ctrl+N"));
     newAct->setStatusTip(tr("make new file"));
@@ -17,9 +17,24 @@ qt_editor::qt_editor(QWidget *parent)
 
     QAction *quitAct=new QAction("&Quit", this);
     connect(quitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
-//*/
+#else
+    QAction *newAct=makeAction("Icon_New_File.png", "&New", "Ctrl+N", \
+                                 "make new file", this, SLOT(newFile()));
+#endif
+    QAction *openAct=makeAction("Icon_Open_File.png", "&Open", "Ctrl+O", \
+                                  "open a file", this, SLOT(openFile( )));
 
-    // 질문: 맥에서는 quitAct 구현을 할 이유가 있을까?
+    QAction *saveAct=makeAction("Icon_Save_File.png", "&Save", "Ctrl+S", \
+                                  "save this file", this, SLOT(saveFile()));
+
+    QAction *saveAsAct = makeAction("Icon_SaveAs_File.png", "&Save &as...", "Ctrl+Shift+S", \
+                                    "save this file as a new name", this, SLOT(saveAsFile( )));
+
+    QAction *printAct = makeAction("Icon_Print_File.png", "&Print", "Ctrl+P", \
+                                   "print this file", this, SLOT(print( )));
+
+    QAction *quitAct = makeAction("Icon_Quit_File.png", "&Quit", "Ctrl+Q", \
+                                  "quit this program", qApp, SLOT(quit( )));
 
 /*  // QKeySequence 사용 시, 함수의 인자가 QString 아니어서 함수 오버로딩 또는 템플릿 필요
     QAction*newAct=makeAction("Icon_New_File.png", tr("&New"), QKeySequence::New, \
@@ -31,19 +46,32 @@ qt_editor::qt_editor(QWidget *parent)
 //*/
     QMenu *fileMenu = menubar->addMenu("&File"); // addMenu() 메서드를 이용
     fileMenu->addAction(newAct);
-
+    fileMenu->addAction(openAct);
+    fileMenu->addAction(saveAct);
+    fileMenu->addAction(saveAsAct);
+    fileMenu->addSeparator();
+    fileMenu->addAction(printAct);
+    fileMenu->addSeparator();
     fileMenu->addAction(quitAct);
 
     QToolBar *fileToolBar = addToolBar("&File");
     fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     fileToolBar->addAction(newAct);
-
+    fileToolBar->addAction(openAct);
+    fileToolBar->addAction(saveAct);
+    fileToolBar->addAction(saveAsAct);
     fileToolBar->addSeparator();
-    fileToolBar->addAction(newAct);
+    fileToolBar->addAction(printAct);
+    fileToolBar->addSeparator();
+    fileToolBar->addAction(quitAct);
 
     QMenu *windowMenu=menubar->addMenu("&Window");
+
     QMenu *toolbarMenu=windowMenu->addMenu("&Toolbar");
     toolbarMenu->addAction(fileToolBar->toggleViewAction());
+
+    QAction *alignCenterAct=new QAction("&Center", this);
+    connect(alignCenterAct, &QAction::triggered, this, [=]{textedit->setAlignment(Qt::AlignCenter);});
 
     QFontComboBox*fontComboBox=new QFontComboBox(this);
     connect(fontComboBox, SIGNAL(currentFontChanged(QFont)), textedit, SLOT(setCurrentFont(QFont)));
@@ -57,14 +85,17 @@ qt_editor::qt_editor(QWidget *parent)
     formatToolbar->addWidget(fontComboBox);
     formatToolbar->addWidget(sizeSpinBox);
 
-    fileToolBar->addAction(quitAct);
+    QMenu *formatMenu=menubar->addMenu("&Format");
+    formatMenu->addAction(fileToolBar->toggleViewAction());
+    formatMenu->addAction(formatToolbar->toggleViewAction( ));
 
     QStatusBar *statusbar=statusBar();
     QLabel*statusLabel=new QLabel(tr("Qt Editor"), statusbar);
     statusbar->addPermanentWidget(statusLabel);
     statusbar->showMessage("started",1500);
 }
-/*  //원형 슬롯 본문
+
+//원형 슬롯 본문
 QAction *qt_editor::makeAction(QString icon, QString text, QString shortCut, \
                                QString toolTip, QObject* recv, const char*slot) {
     QAction *act=new QAction(text,this);
@@ -75,7 +106,6 @@ QAction *qt_editor::makeAction(QString icon, QString text, QString shortCut, \
     connect(act, SIGNAL(triggered()),recv, slot);
     return act;
 }
-*/
 
 /*
 // 그냥 템플릿 특수화 원형
@@ -94,6 +124,7 @@ QAction *qt_editor::makeAction(QString icon, QString text, T shortCut, \
 
 // 단축키를 문자열로 입력 받으면 동작이 안될 때가 있음
 // const char*를 QString 클래스나 Object::tr() 메서드로 QString형으로 변환
+/*
 template <>
 QAction *qt_editor::makeAction(QString icon, QString text, const char* shortCut, \
                                QString toolTip, QObject* recv, const char*slot) {
@@ -105,6 +136,7 @@ QAction *qt_editor::makeAction(QString icon, QString text, const char* shortCut,
     connect(act, SIGNAL(triggered()),recv, slot);
     return act;
 }
+*/
 /*
 template <typename T, typename Functor>
 QAction *qt_editor::makeAction(QString icon, QString text, T shortCut, \
@@ -125,3 +157,32 @@ qt_editor::~qt_editor() {}
 void qt_editor::newFile() {
     qDebug("Make New File");
 }
+void qt_editor::openFile( ) {
+    qDebug("Open a File");
+}
+void qt_editor::saveFile( ) {
+    qDebug("Save this File");
+}
+void qt_editor::saveAsFile( ) {
+    qDebug("Save this File as a new name");
+}
+void qt_editor::print( ) {
+    qDebug("print this File");
+}
+void qt_editor::undo() { qDebug("Undo"); }
+void qt_editor::redo() { qDebug("Redo"); }
+void qt_editor::copy() { qDebug("Copy"); }
+void qt_editor::cut() { qDebug("Cut"); }
+void qt_editor::paste() { qDebug("Paste"); }
+void qt_editor::zoomIn() { qDebug("Zoom In"); }
+void qt_editor::zoomOut() { qDebug("Zoom Out"); }
+void qt_editor::setFont() { qDebug("Set Font"); }
+void qt_editor::setColor() { qDebug("Set Color"); }
+void qt_editor::alignText() { qDebug("Align Text"); }
+void qt_editor::setCurrentFont(const QFont& font) { qDebug() << "Set current font:" << font.family(); }
+void qt_editor::setFontPointSize(qreal pointSize) { qDebug() << "Set font size:" << pointSize; }
+void qt_editor::setFontWidget() { qDebug("Set Font Widget"); }
+void qt_editor::selectWindow() { qDebug("Select Window"); }
+void qt_editor::closeWindow() { qDebug("Close Window"); }
+void qt_editor::about() { qDebug("About"); }
+

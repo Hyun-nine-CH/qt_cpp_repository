@@ -26,15 +26,18 @@ public:
     ~qt_editor();
 
 // 원형 슬롯
+
 private:
     QAction *makeAction(QString icon, QString text, QString shortCut, \
                         QString toolTip, QObject* recv, const char*slot);
 
+/*
 // 원형에서 템플릿으로만 변환
 private:
     template <typename T>
     QAction *makeAction(QString icon, QString text, T shortCut, \
                         QString toolTip, QObject* recv, const char* slot);
+
 
 // 템플릿이 필요한 QKeySequence tech && Lambda Func.
 private:
@@ -42,15 +45,47 @@ private:
     QAction *makeAction(QString icon, QString text, const char* shortCut, \
                         QString toolTip, QObject* recv, const char* slot);
 
+
 // 람다 함수를 메서드(함수)의 인자로 사용하려면 템플릿 필요
 // 펑터는 함수나 클래스의 객체로 정의
 private:
     template <typename T, typename Functor>
     QAction *makeAction(QString icon, QString text, T shortCut, \
                         QString toolTip, Functor lambda);
+*/
 
 public slots:
+
+    /* File Menu */
     void newFile();
+    void openFile();
+    void saveFile();
+    void saveAsFile();
+    void print();
+
+    /* Edit Menu */
+    void undo();
+    void redo();
+    void copy();
+    void cut();
+    void paste();
+    void zoomIn();
+    void zoomOut();
+
+    /* Format Menu */
+    void setFont();
+    void setColor();
+    void alignText();
+
+    void setCurrentFont(const QFont&);
+    void setFontPointSize(qreal);
+
+    void setFontWidget();
+    void selectWindow();
+    void closeWindow();
+
+    /* Help Menu */
+    void about();
 };
 
 /*
