@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/images.png</file>
+        <file>images/Upload-Icon-Logo-Transparent-Image.png</file>
+        <file>images/545234.png</file>
+        <file>images/18281376.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
+</RCC>

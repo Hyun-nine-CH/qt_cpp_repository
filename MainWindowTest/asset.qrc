@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/asset">
+        <file>icon/new.png</file>
+        <file>icon/quit.png</file>
+    </qresource>
+</RCC>
