@@ -4,9 +4,9 @@
 #include <QLabel>
 
 #ifdef Q_OS_MACOS
-#define kor(str)    QString::fromUtf8(str)
+#define kor(str)    QString::fromUtf8(str) // <- MacOS
 #else
-#define kor(str)    QString::fromLocal8Bit(str)
+#define kor(str)    QString::fromLocal8Bit(str) // <- greyLine
 #endif
 
 int main(int argc, char *argv[])
