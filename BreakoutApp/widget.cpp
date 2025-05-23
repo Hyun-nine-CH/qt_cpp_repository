@@ -1,6 +1,8 @@
 #include "widget.h"
 #include <QLabel>
 
+#include <QApplication>
+
 #define WIDTH   50
 #define HEIGHT  12
 #define SCR_WIDTH   300
@@ -25,7 +27,24 @@ Widget::Widget(QWidget *parent)
             bricks[i]->setGeometry(x*WIDTH, y*HEIGHT+30, WIDTH, HEIGHT);
         }
     resize(SCR_WIDTH, SCR_HEIGHT);
+    setMouseTracking(true);
 }
+
+void Widget::keyPressEvent(QKeyEvent*e) {
+    switch (e->key()) {
+    case Qt::Key_Left:
+        paddle->move(paddle->x()-MOVE_SPEED, paddle->y());
+        break;
+    case Qt::Key_Right:
+        paddle->move(paddle->x()+MOVE_SPEED, paddle->y());
+        break;
+    case Qt::Key_Escape:
+        qApp->exit();
+        break;
+    default:
+        QWidget::keyPressEvent(e);
+    }
+} // 키보드 이동에도 경계 검사 추가하기
 
 Widget::~Widget() {
     delete ball;
@@ -35,3 +54,11 @@ Widget::~Widget() {
         delete bricks[i];
     }
 }
+
+void Widget::mouseMoveEvent(QMouseEvent*e) {
+    int x = e->pos().x();
+    x = (x<0)? 0 : (x+WIDTH>width())? width()-WIDTH:x;
+    paddle->move(x, paddle->y());
+}
+
+// Protected Functions
