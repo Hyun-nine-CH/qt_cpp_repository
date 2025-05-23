@@ -17,6 +17,10 @@
 #include <QLabel>
 #include <QStatusBar>
 
+#include <QDockWidget>
+
+class QTextEdit;
+
 class qt_editor : public QMainWindow
 {
     Q_OBJECT
@@ -30,6 +34,9 @@ public:
 private:
     QAction *makeAction(QString icon, QString text, QString shortCut, \
                         QString toolTip, QObject* recv, const char*slot);
+
+private:
+    QTextEdit* textedit;
 
 /*
 // 원형에서 템플릿으로만 변환
