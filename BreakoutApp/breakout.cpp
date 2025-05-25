@@ -39,6 +39,9 @@ void breakOut::keyPressEvent(QKeyEvent*e) {
     case Qt::Key_Left:
         paddle->move(paddle->x()-MOVE_SPEED, paddle->y());
         break;
+    case Qt::Key_Right:
+        paddle->move(paddle->x()+MOVE_SPEED, paddle->y());
+        break;
     case Qt::Key_Escape:
         qApp->exit();
         break;
