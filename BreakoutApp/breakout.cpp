@@ -35,6 +35,10 @@ breakOut::~breakOut() {
     }
 }
 void breakOut::keyPressEvent(QKeyEvent*e) {
+    int x=paddle->x();
+    x=(x<0)?0:(x+WIDTH>width())?width()-WIDTH:x;
+    paddle->move(x,paddle->y());
+
     switch(e->key()) {
     case Qt::Key_Left:
         paddle->move(paddle->x()-MOVE_SPEED, paddle->y());

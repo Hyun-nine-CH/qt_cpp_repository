@@ -63,7 +63,12 @@ Widget::Widget(QWidget *parent)
     connect(m_buttons.at(12), SIGNAL(clicked()),SLOT(setNum()));
 */
     // Clear 버튼을 위한 시그널/슬롯 연결: 람다 함수로 연결
-    connect(m_buttons.at(13),&QPushButton::clicked,this,[=](){m_label->setText("0");});
+    // connect(m_buttons.at(13),&QPushButton::clicked,this,[=](){m_label->setText("0");});
+    if (m_buttons.size() > 13) {
+        connect(m_buttons.at(13), &QPushButton::clicked, this, [=]() {
+            m_label->setText("0");
+        });
+    }
 /*
     connect(buttonGroup->button(13), &QPushButton::clicked, this, [=]() {
         m_label->setText("0");
