@@ -1,16 +1,15 @@
-#include "widget.h"
 #include <QLabel>
-
-#include <QApplication>
+#include "breakout.h"
 
 #define WIDTH   50
 #define HEIGHT  12
 #define SCR_WIDTH   300
 #define SCR_HEIGHT  400
 
-Widget::Widget(QWidget *parent)
-    : QWidget(parent)
-{
+#include <QApplication>
+
+Breakout::Breakout(QWidget *parent)
+    : QWidget(parent), xDir(1), yDir(-1) {
     ball=new QLabel(this);
     ball->setGeometry(SCR_WIDTH*0.8, SCR_HEIGHT*0.875, 10, 10);
     ball->setStyleSheet("QLabel{ background-color:red; border-radius: 5px; }");
@@ -27,10 +26,22 @@ Widget::Widget(QWidget *parent)
             bricks[i]->setGeometry(x*WIDTH, y*HEIGHT+30, WIDTH, HEIGHT);
         }
     resize(SCR_WIDTH, SCR_HEIGHT);
+
     setMouseTracking(true);
+
+    timerId=startTimer(10);
 }
 
-void Widget::keyPressEvent(QKeyEvent*e) {
+Breakout::~Breakout() {
+    delete ball;
+    delete paddle;
+
+    for(int i=0; i<NO_OF_BRICKS; i++) {
+        delete bricks[i];
+    }
+}
+
+void Breakout::keyPressEvent(QKeyEvent*e) {
     switch (e->key()) {
     case Qt::Key_Left:
         paddle->move(paddle->x()-MOVE_SPEED, paddle->y());
@@ -46,19 +57,24 @@ void Widget::keyPressEvent(QKeyEvent*e) {
     }
 } // 키보드 이동에도 경계 검사 추가하기
 
-Widget::~Widget() {
-    delete ball;
-    delete paddle;
-
-    for(int i=0; i<NO_OF_BRICKS; i++) {
-        delete bricks[i];
-    }
-}
-
-void Widget::mouseMoveEvent(QMouseEvent*e) {
+void Breakout::mouseMoveEvent(QMouseEvent*e) {
     int x = e->pos().x();
     x = (x<0)? 0 : (x+WIDTH>width())? width()-WIDTH:x;
     paddle->move(x, paddle->y());
+}
+
+void Breakout::timerEvent(QTimerEvent *e) {
+    Q_UNUSED(e);
+    moveObjects();
+}
+
+void Breakout::moveObjects() {
+    ball->move(ball->x()+xDir,ball->y()+yDir);
+
+    if((ball->x()<=0) || (ball->x()+10>=SCR_WIDTH)) {
+        xDir*=-1;
+    }
+    if (ball->y()<=0) yDir=1;
 }
 
 // Protected Functions

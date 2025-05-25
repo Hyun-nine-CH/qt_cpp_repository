@@ -1,32 +1,18 @@
 #ifndef WIDGET_H
 #define WIDGET_H
-
 #include <QWidget>
-#include <QMouseEvent>
-#include <QKeyEvent>
 
-class QLabel;
-
-class Widget : public QWidget
-{
-    Q_OBJECT
-
-public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
-
-private:
-    static const int NO_OF_BRICKS=30;
-
-    QLabel*ball;
-    QLabel*paddle;
-    QLabel*bricks[NO_OF_BRICKS];
-
+class Breakout:public QWidget {
 protected:
     void keyPressEvent(QKeyEvent*) override;
-    void mouseMoveEvent(QMouseEvent*e) override;
+    void mouseMoveEvent(QMouseEvent*) override;
+    void timerEvent(QTimerEvent*) override;
+    void moveObjects();
 
-protected:
-    static const int MOVE_SPEED = 3;
+private:
+    QLabel*bricks[NO_OF_BRICKS];
+    int timerId;
+    int xDir, yDir;
 };
+
 #endif // WIDGET_H
