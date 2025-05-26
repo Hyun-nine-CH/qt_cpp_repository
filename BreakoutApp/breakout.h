@@ -23,6 +23,10 @@ private:
     int timerId;
     int xDir, yDir;
 
+    QLabel *scoreLabel;
+    QLabel *messageLabel;
+    int score;
+
 protected:
     void keyPressEvent(QKeyEvent*) override;
     void mouseMoveEvent(QMouseEvent*e) override;

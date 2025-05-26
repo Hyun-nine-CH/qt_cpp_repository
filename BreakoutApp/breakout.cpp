@@ -24,6 +24,17 @@ breakOut::breakOut(QWidget *parent)
     resize(SCR_WIDTH,SCR_HEIGHT);
     setMouseTracking(true);
     timerId=startTimer(10);
+
+    score=0;
+    scoreLabel=new QLabel("score: 0", this);
+    scoreLabel->setGeometry(10,10,150,30);
+
+    messageLabel=new QLabel("",this);
+    messageLabel->setGeometry(100,200,200,50);
+
+    scoreLabel->setStyleSheet("font: bold 14px;");
+    messageLabel->setStyleSheet("color: green; font: bold 18px;");
+    messageLabel->setAlignment(Qt::AlignCenter);
 }
 
 breakOut::~breakOut() {
@@ -112,6 +123,13 @@ void breakOut::checkCollision() {
                 if(bricks[i]->geometry().contains(pointTop)) yDir=1;
                     else if(bricks[i]->geometry().contains(pointBottom)) yDir=-1;
                     bricks[i]->setHidden(true);
+
+                    score++;
+                    scoreLabel->setText(QString("Score: %1").arg(score));
+
+                    if(score==NO_OF_BRICKS) {
+                        messageLabel->setText("game clear!!");
+                    }
             }
         }
     }
