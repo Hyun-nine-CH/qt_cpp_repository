@@ -43,18 +43,18 @@ breakOut::breakOut(QWidget *parent)
     bgPlayer=new QMediaPlayer();
     bgPlayer->setAudioOutput(bgAudioOutput);
     bgPlayer->setLoops(QMediaPlayer::Infinite);
-    bgPlayer->setSource(QUrl::fromLocalFile(QFileInfo("/Users/choehyeongu/Downloads/background.wav").absoluteFilePath()));
+    bgPlayer->setSource(QUrl::fromLocalFile(QFileInfo().absoluteFilePath()));
     bgPlayer->play();
-
+//"/Users/choehyeongu/Downloads/background.wav"
     QAudioOutput*bgEffectOutput=new QAudioOutput;
     bgEffectOutput->setVolume(200);
 
     effectPlayer=new QMediaPlayer();
     effectPlayer->setAudioOutput(bgAudioOutput);
     effectPlayer->setLoops(QMediaPlayer::Once);
-    effectPlayer->setSource(QUrl::fromLocalFile(QFileInfo("/Users/choehyeongu/Downloads/collision.wav").absoluteFilePath()));
+    effectPlayer->setSource(QUrl::fromLocalFile(QFileInfo().absoluteFilePath()));
 }
-
+//"/Users/choehyeongu/Downloads/collision.wav"
 breakOut::~breakOut() {
     delete ball;
     delete paddle;
