@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QMediaPlayer>
 class QLabel;
 class breakOut : public QWidget
 {
@@ -26,6 +27,9 @@ private:
     QLabel *scoreLabel;
     QLabel *messageLabel;
     int score;
+
+    QMediaPlayer*bgPlayer;
+    QMediaPlayer*effectPlayer;
 
 protected:
     void keyPressEvent(QKeyEvent*) override;

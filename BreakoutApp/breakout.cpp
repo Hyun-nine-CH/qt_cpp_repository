@@ -4,6 +4,7 @@
 #define SCR_WIDTH   300
 #define SCR_HEIGHT  400
 #include <QApplication>
+#include <QtMultimedia>
 breakOut::breakOut(QWidget *parent)
     : QWidget(parent), xDir(1),yDir(-1)
 {
@@ -35,6 +36,23 @@ breakOut::breakOut(QWidget *parent)
     scoreLabel->setStyleSheet("font: bold 14px;");
     messageLabel->setStyleSheet("color: green; font: bold 18px;");
     messageLabel->setAlignment(Qt::AlignCenter);
+
+    QAudioOutput*bgAudioOutput=new QAudioOutput;
+    bgAudioOutput->setVolume(10);
+
+    bgPlayer=new QMediaPlayer();
+    bgPlayer->setAudioOutput(bgAudioOutput);
+    bgPlayer->setLoops(QMediaPlayer::Infinite);
+    bgPlayer->setSource(QUrl::fromLocalFile(QFileInfo("/Users/choehyeongu/Downloads/background.wav").absoluteFilePath()));
+    bgPlayer->play();
+
+    QAudioOutput*bgEffectOutput=new QAudioOutput;
+    bgEffectOutput->setVolume(200);
+
+    effectPlayer=new QMediaPlayer();
+    effectPlayer->setAudioOutput(bgAudioOutput);
+    effectPlayer->setLoops(QMediaPlayer::Once);
+    effectPlayer->setSource(QUrl::fromLocalFile(QFileInfo("/Users/choehyeongu/Downloads/collision.wav").absoluteFilePath()));
 }
 
 breakOut::~breakOut() {
@@ -105,6 +123,8 @@ void breakOut::checkCollision() {
         if(ballLPos<third&&ballLPos<fourth) xDir=-1; yDir*=-1;
         if(ballLPos>fourth) xDir=1; yDir=-1;
     }
+    effectPlayer->stop();
+    effectPlayer->play();
 
     for(int i=0; i<NO_OF_BRICKS; i++) {
         if((ball->geometry()).intersects(bricks[i]->geometry())) {
@@ -123,6 +143,9 @@ void breakOut::checkCollision() {
                 if(bricks[i]->geometry().contains(pointTop)) yDir=1;
                     else if(bricks[i]->geometry().contains(pointBottom)) yDir=-1;
                     bricks[i]->setHidden(true);
+
+                    effectPlayer->stop();
+                    effectPlayer->play();
 
                     score++;
                     scoreLabel->setText(QString("Score: %1").arg(score));
