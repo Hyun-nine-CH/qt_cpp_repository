@@ -6,7 +6,11 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QMediaPlayer>
-class QLabel;
+
+#include "ball.h"
+#include "brick.h"
+#include "paddle.h"
+//class QLabel;
 class breakOut : public QWidget
 {
     Q_OBJECT
@@ -18,9 +22,13 @@ public:
 private:
     static const int NO_OF_BRICKS=30;
 
-    QLabel*ball;
-    QLabel*paddle;
-    QLabel*bricks[NO_OF_BRICKS];
+    Ball*ball;
+    Paddle*paddle;
+    Brick*bricks[NO_OF_BRICKS];
+
+//    QLabel*ball;
+//    QLabel*paddle;
+//    QLabel*bricks[NO_OF_BRICKS];
     int timerId;
     int xDir, yDir;
 
