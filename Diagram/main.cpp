@@ -65,6 +65,8 @@ class ProductManager {
   + loadGuitarListFromFile(): void
   + saveEffectListToFile(): void
   + loadEffectListFromFile(): void
+  + applyDiscountToProduct(code, percentage): void
+  + formatStockWithComma(): void
 }
 
 class Guitar {
@@ -234,6 +236,7 @@ class GenreStarterSet {
   +searchByGenre(genre): GenreStarterSet
   +searchByGuitarType(type): GenreStarterSet
 }
+
 Order --> GenreStarterSet : includes
  *
  * /
