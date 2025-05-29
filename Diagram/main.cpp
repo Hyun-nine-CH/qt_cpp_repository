@@ -44,15 +44,27 @@ class ProductManager {
   + inputAmp(): void
   + deleteAmp(): void
   + findAmpByCode(code): Amp
+  + saveAmpListToFile(): void
+  + loadAmpListFromFile(): void
   + inputPowerSupply(): void
   + deletePowerSupply(): void
   + findPowerSupplyByCode(code): PowerSupply
+  + savePowerSupplyListToFile(): void
+  + loadPowerSupplyListFromFile(): void
   + inputCable(): void
   + deleteCable(): void
   + findCableByCode(code): Cable
+  + saveCableListToFile(): void
+  + loadCableListFromFile(): void
   + inputTuner(): void
   + deleteTuner(): void
   + findTunerByCode(code): Tuner
+  + saveTunerListToFile(): void
+  + loadTunerListFromFile(): void
+  + saveGuitarListToFile(): void
+  + loadGuitarListFromFile(): void
+  + saveEffectListToFile(): void
+  + loadEffectListFromFile(): void
 }
 
 class Guitar {
@@ -67,6 +79,7 @@ class GuitarModel {
   +stock: int
   +getCode(): string
   +getModel(): string
+  +getBrand(): string
   +getPrice(): int
   +getStock(): int
 }
@@ -84,6 +97,7 @@ class EffectModel {
   +stock: int
   +getCode(): string
   +getModel(): string
+  +getBrand(): string
   +getPrice(): int
   +getStock(): int
 }
@@ -98,6 +112,7 @@ class Accessory {
   +getCode(): string
   +getModel(): string
   +getPurpose(): string
+  +getPrice(): int
   +getStock(): int
 }
 
@@ -220,12 +235,5 @@ class GenreStarterSet {
   +searchByGuitarType(type): GenreStarterSet
 }
 Order --> GenreStarterSet : includes
- *
- *
- *
- *
- *
- *
- *
  *
  * /
