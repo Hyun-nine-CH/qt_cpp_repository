@@ -229,7 +229,6 @@ class GenreStarterSet {
   +genre: string
   +guitarType: string
   +effectTypes: vector~string~
-  +optionalItems: vector~string~
   +starterSetId: string
   +saveToFile(): void
   +loadFromFile(): void
