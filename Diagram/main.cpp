@@ -89,16 +89,6 @@ class EffectModel {
 }
 Effect --> EffectModel : contains
 
-class GuitarEffectMap {
-  +guitarType: string
-  +recommendedEffectTypes: vector~string~
-  +mapSetId: string
-  +getEffectTypesForGuitar(type): vector~string~
-  +getGuitarForGenre(genre): string
-}
-Guitar --> GuitarEffectMap : mapsTo
-GuitarEffectMap --> Effect : recommends
-
 class Accessory {
   - code: string
   - model: string
@@ -228,7 +218,6 @@ class GenreStarterSet {
   +loadFromFile(): void
   +searchByGenre(genre): GenreStarterSet
   +searchByGuitarType(type): GenreStarterSet
-  +getSetMap(): GuitarEffectMap
 }
 Order --> GenreStarterSet : includes
  *
