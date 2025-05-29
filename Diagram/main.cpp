@@ -22,50 +22,30 @@ direction BT
 
 %% ProductManager
 class ProductManager {
-  - guitars: vector~Guitar~ [ordered]
-  - effects: vector~Effect~ [ordered]
-  - accessories: vector~Accessory~ [ordered]
-  - amps: vector~Amp~ [ordered]
-  - powerSupplies: vector~PowerSupply~ [ordered]
-  - cables: vector~Cable~ [ordered]
-  - tuners: vector~Tuner~ [ordered]
-  + inputGuitar(): void
-  + inputGuitar(GuitarModel): void
-  + deleteGuitar(): void
-  + findGuitarByCode(code): GuitarModel
-  + inputEffect(): void
-  + inputEffect(EffectModel): void
-  + deleteEffect(): void
-  + findEffectByCode(code): EffectModel
-  + inputAccessory(): void
-  + inputAccessory(Accessory): void
-  + deleteAccessory(): void
-  + findAccessoryByPurpose(purpose): Accessory
-  + inputAmp(): void
-  + inputAmp(Amp): void
-  + deleteAmp(): void
-  + findAmpByCode(code): Amp
-  + inputPowerSupply(): void
-  + inputPowerSupply(PowerSupply): void
-  + deletePowerSupply(): void
-  + findPowerSupplyByCode(code): PowerSupply
-  + inputCable(): void
-  + inputCable(Cable): void
-  + deleteCable(): void
-  + findCableByCode(code): Cable
-  + inputTuner(): void
-  + inputTuner(Tuner): void
-  + deleteTuner(): void
-  + findTunerByCode(code): Tuner
+  - guitarManager: GuitarManager
+  - effectManager: EffectManager
+  - accessoryManager: AccessoryManager
+  - ampManager: AmpManager
+  - powerSupplyManager: PowerSupplyManager
+  - cableManager: CableManager
+  - tunerManager: TunerManager
   + saveToFile(filename): void
   + loadFromFile(filename): void
   + applyDiscountToProduct(code, percent): void
   + formatStockWithComma(): void
 }
 
+%% Guitar
+class GuitarManager {
+  - guitars: vector~Guitar~
+  + inputGuitar(): void
+  + deleteGuitar(): void
+  + findGuitarByCode(code): GuitarModel
+  + applyDiscount(code, percent): void
+}
 class Guitar {
   +type: string
-  +models: vector~GuitarModel~ [ordered]
+  +models: vector~GuitarModel~
 }
 class GuitarModel {
   +code: string
@@ -79,11 +59,21 @@ class GuitarModel {
   +getPrice(): int
   +getStock(): int
 }
-Guitar *--> GuitarModel : contains
+Guitar *--> GuitarModel
+GuitarManager --> Guitar
+GuitarManager --> ProductManager
 
+%% Effect
+class EffectManager {
+  - effects: vector~Effect~
+  + inputEffect(): void
+  + deleteEffect(): void
+  + findEffectByCode(code): EffectModel
+  + applyDiscount(code, percent): void
+}
 class Effect {
   +effectType: string
-  +models: vector~EffectModel~ [ordered]
+  +models: vector~EffectModel~
 }
 class EffectModel {
   +code: string
@@ -97,8 +87,17 @@ class EffectModel {
   +getPrice(): int
   +getStock(): int
 }
-Effect *--> EffectModel : contains
+Effect *--> EffectModel
+EffectManager --> Effect
+EffectManager --> ProductManager
 
+%% Accessory
+class AccessoryManager {
+  - accessories: vector~Accessory~
+  + inputAccessory(): void
+  + deleteAccessory(): void
+  + findAccessoryByPurpose(purpose): Accessory
+}
 class Accessory {
   - code: string
   - model: string
@@ -111,7 +110,16 @@ class Accessory {
   +getPrice(): int
   +getStock(): int
 }
+AccessoryManager --> Accessory
+AccessoryManager --> ProductManager
 
+%% Amp
+class AmpManager {
+  - amps: vector~Amp~
+  + inputAmp(): void
+  + deleteAmp(): void
+  + findAmpByCode(code): Amp
+}
 class Amp {
   - code: string
   - model: string
@@ -124,7 +132,16 @@ class Amp {
   +getPrice(): int
   +getStock(): int
 }
+AmpManager --> Amp
+AmpManager --> ProductManager
 
+%% PowerSupply
+class PowerSupplyManager {
+  - powerSupplies: vector~PowerSupply~
+  + inputPowerSupply(): void
+  + deletePowerSupply(): void
+  + findPowerSupplyByCode(code): PowerSupply
+}
 class PowerSupply {
   - code: string
   - model: string
@@ -137,7 +154,16 @@ class PowerSupply {
   +getPrice(): int
   +getStock(): int
 }
+PowerSupplyManager --> PowerSupply
+PowerSupplyManager --> ProductManager
 
+%% Cable
+class CableManager {
+  - cables: vector~Cable~
+  + inputCable(): void
+  + deleteCable(): void
+  + findCableByCode(code): Cable
+}
 class Cable {
   - code: string
   - model: string
@@ -150,7 +176,16 @@ class Cable {
   +getPrice(): int
   +getStock(): int
 }
+CableManager --> Cable
+CableManager --> ProductManager
 
+%% Tuner
+class TunerManager {
+  - tuners: vector~Tuner~
+  + inputTuner(): void
+  + deleteTuner(): void
+  + findTunerByCode(code): Tuner
+}
 class Tuner {
   - code: string
   - model: string
@@ -163,16 +198,10 @@ class Tuner {
   +getPrice(): int
   +getStock(): int
 }
+TunerManager --> Tuner
+TunerManager --> ProductManager
 
-ProductManager o--> Guitar : manages
-ProductManager o--> Effect : manages
-ProductManager o--> Accessory : manages
-ProductManager o--> Amp : manages
-ProductManager o--> PowerSupply : manages
-ProductManager o--> Cable : manages
-ProductManager o--> Tuner : manages
-
-%% ClientManager & OrderManager
+%% Client
 class ClientManager {
   - clientList: map~int, Client~
   + inputClient(): void
@@ -180,7 +209,6 @@ class ClientManager {
   + deleteClient(): void
   + findClientById(id): Client
 }
-
 class Client {
   - id: int
   - name: string
@@ -191,7 +219,9 @@ class Client {
   + getPhoneNumber(): string
   + getAddress(): string
 }
+ClientManager --> Client
 
+%% Order
 class Order {
   - orderId: int
   - clientId: int
@@ -204,9 +234,8 @@ class Order {
   + isPurchased(): bool
   + updateDate(): void
 }
-
 class OrderManager {
-  - orderList: vector~Order~ [ordered]
+  - orderList: vector~Order~
   - orderCounter: int
   + createOrder(): void
   + createOrder(Client, Product): void
@@ -214,10 +243,8 @@ class OrderManager {
   + listOrders(): void
   + checkStock(): bool
 }
-
-ClientManager --> Client : manages
-OrderManager --> Order : manages
-Order --> Client : references
+OrderManager --> Order
+Order --> Client
 Order ..> ProductManager : references
 
 %% GenreStarterSet
@@ -231,7 +258,6 @@ class GenreStarterSet {
   +searchByGenre(genre): GenreStarterSet
   +searchByGuitarType(type): GenreStarterSet
 }
-
 Order --> GenreStarterSet : includes
  *
  * /
