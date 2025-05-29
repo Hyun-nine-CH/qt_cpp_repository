@@ -18,60 +18,54 @@ config:
     hideEmptyMembersBox: false
 ---
 classDiagram
-
 direction BT
 
-%% ProductManager와 관련된 구성
+%% ProductManager
 class ProductManager {
-  - guitars: vector~Guitar~
-  - effects: vector~Effect~
-  - accessories: vector~Accessory~
-  - amps: vector~Amp~
-  - powerSupplies: vector~PowerSupply~
-  - cables: vector~Cable~
-  - tuners: vector~Tuner~
+  - guitars: vector~Guitar~ [ordered]
+  - effects: vector~Effect~ [ordered]
+  - accessories: vector~Accessory~ [ordered]
+  - amps: vector~Amp~ [ordered]
+  - powerSupplies: vector~PowerSupply~ [ordered]
+  - cables: vector~Cable~ [ordered]
+  - tuners: vector~Tuner~ [ordered]
   + inputGuitar(): void
+  + inputGuitar(GuitarModel): void
   + deleteGuitar(): void
   + findGuitarByCode(code): GuitarModel
   + inputEffect(): void
+  + inputEffect(EffectModel): void
   + deleteEffect(): void
   + findEffectByCode(code): EffectModel
   + inputAccessory(): void
+  + inputAccessory(Accessory): void
   + deleteAccessory(): void
   + findAccessoryByPurpose(purpose): Accessory
-  + inputStarterSet(): void
-  + findStarterSetByGuitarType(type): GenreStarterSet
   + inputAmp(): void
+  + inputAmp(Amp): void
   + deleteAmp(): void
   + findAmpByCode(code): Amp
-  + saveAmpListToFile(): void
-  + loadAmpListFromFile(): void
   + inputPowerSupply(): void
+  + inputPowerSupply(PowerSupply): void
   + deletePowerSupply(): void
   + findPowerSupplyByCode(code): PowerSupply
-  + savePowerSupplyListToFile(): void
-  + loadPowerSupplyListFromFile(): void
   + inputCable(): void
+  + inputCable(Cable): void
   + deleteCable(): void
   + findCableByCode(code): Cable
-  + saveCableListToFile(): void
-  + loadCableListFromFile(): void
   + inputTuner(): void
+  + inputTuner(Tuner): void
   + deleteTuner(): void
   + findTunerByCode(code): Tuner
-  + saveTunerListToFile(): void
-  + loadTunerListFromFile(): void
-  + saveGuitarListToFile(): void
-  + loadGuitarListFromFile(): void
-  + saveEffectListToFile(): void
-  + loadEffectListFromFile(): void
-  + applyDiscountToProduct(code, percentage): void
+  + saveToFile(filename): void
+  + loadFromFile(filename): void
+  + applyDiscountToProduct(code, percent): void
   + formatStockWithComma(): void
 }
 
 class Guitar {
   +type: string
-  +models: vector~GuitarModel~
+  +models: vector~GuitarModel~ [ordered]
 }
 class GuitarModel {
   +code: string
@@ -85,11 +79,11 @@ class GuitarModel {
   +getPrice(): int
   +getStock(): int
 }
-Guitar --> GuitarModel : contains
+Guitar *--> GuitarModel : contains
 
 class Effect {
   +effectType: string
-  +models: vector~EffectModel~
+  +models: vector~EffectModel~ [ordered]
 }
 class EffectModel {
   +code: string
@@ -103,7 +97,7 @@ class EffectModel {
   +getPrice(): int
   +getStock(): int
 }
-Effect --> EffectModel : contains
+Effect *--> EffectModel : contains
 
 class Accessory {
   - code: string
@@ -170,40 +164,19 @@ class Tuner {
   +getStock(): int
 }
 
-ProductManager --> Guitar : manages
-ProductManager --> Effect : manages
-ProductManager --> Accessory : manages
-ProductManager --> Amp : manages
-ProductManager --> PowerSupply : manages
-ProductManager --> Cable : manages
-ProductManager --> Tuner : manages
+ProductManager o--> Guitar : manages
+ProductManager o--> Effect : manages
+ProductManager o--> Accessory : manages
+ProductManager o--> Amp : manages
+ProductManager o--> PowerSupply : manages
+ProductManager o--> Cable : manages
+ProductManager o--> Tuner : manages
 
-%% OrderManager 및 ClientManager 통합
-class OrderManager {
-  - orderList: vector~Order~
-  - orderCounter: int
-  + createOrder(): void
-  + refundOrder(): void
-  + listOrders(): void
-  + checkStock(): bool
-}
-
-class Order {
-  - orderId: int
-  - clientId: int
-  - clientName: string
-  - productCode: string
-  - quantity: int
-  - date: string
-  - status: string
-  + isRefunded(): bool
-  + isPurchased(): bool
-  + updateDate(): void
-}
-
+%% ClientManager & OrderManager
 class ClientManager {
   - clientList: map~int, Client~
   + inputClient(): void
+  + inputClient(Client): void
   + deleteClient(): void
   + findClientById(id): Client
 }
@@ -219,12 +192,35 @@ class Client {
   + getAddress(): string
 }
 
-OrderManager --> Order : manages
-ClientManager --> Client : manages
-Order --> Client : references
-Order --> ProductManager : references
+class Order {
+  - orderId: int
+  - clientId: int
+  - clientName: string
+  - productCode: string
+  - quantity: int
+  - date: string
+  - status: string
+  + isRefunded(): bool
+  + isPurchased(): bool
+  + updateDate(): void
+}
 
-%% 장르 기반 스타터 패키지 옵션을 Order와 연결
+class OrderManager {
+  - orderList: vector~Order~ [ordered]
+  - orderCounter: int
+  + createOrder(): void
+  + createOrder(Client, Product): void
+  + refundOrder(): void
+  + listOrders(): void
+  + checkStock(): bool
+}
+
+ClientManager --> Client : manages
+OrderManager --> Order : manages
+Order --> Client : references
+Order ..> ProductManager : references
+
+%% GenreStarterSet
 class GenreStarterSet {
   +genre: string
   +guitarType: string
