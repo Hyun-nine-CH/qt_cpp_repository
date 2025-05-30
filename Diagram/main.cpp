@@ -35,59 +35,53 @@ class ProductManager {
   + formatStockWithComma(): void
 }
 
-%% Guitar
+%% Guitar (Merged)
 class GuitarManager {
   - guitars: vector~Guitar~
   + inputGuitar(): void
   + deleteGuitar(): void
-  + findGuitarByCode(code): GuitarModel
+  + findGuitarByCode(code): Guitar
   + applyDiscount(code, percent): void
 }
 class Guitar {
-  +type: string
-  +models: vector~GuitarModel~
-}
-class GuitarModel {
   +code: string
   +model: string
   +brand: string
+  +type: string
   +price: int
   +stock: int
   +getCode(): string
   +getModel(): string
   +getBrand(): string
+  +getType(): string
   +getPrice(): int
   +getStock(): int
 }
-Guitar *--> GuitarModel
 GuitarManager --> Guitar
 GuitarManager --> ProductManager
 
-%% Effect
+%% Effect (Merged)
 class EffectManager {
   - effects: vector~Effect~
   + inputEffect(): void
   + deleteEffect(): void
-  + findEffectByCode(code): EffectModel
+  + findEffectByCode(code): Effect
   + applyDiscount(code, percent): void
 }
 class Effect {
-  +effectType: string
-  +models: vector~EffectModel~
-}
-class EffectModel {
   +code: string
   +model: string
   +brand: string
+  +effectType: string
   +price: int
   +stock: int
   +getCode(): string
   +getModel(): string
   +getBrand(): string
+  +getEffectType(): string
   +getPrice(): int
   +getStock(): int
 }
-Effect *--> EffectModel
 EffectManager --> Effect
 EffectManager --> ProductManager
 
