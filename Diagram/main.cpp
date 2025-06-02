@@ -3320,24 +3320,14 @@ int main() {
     }
 }
  *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
  */
 
 
 
 
 
+
+
 /*
 ---
 config:
@@ -3347,814 +3337,656 @@ config:
     hideEmptyMembersBox: false
 ---
 classDiagram
-    direction BT
+direction BT
 
-    %% File: client.h
-    class Client {
-        - int id
-        - std::string name
-        - std::string phoneNumber
-        - std::string address
-        + int getId()
-        + std::string getName()
-        + std::string getPhoneNumber()
-        + std::string getAddress()
-    }
+  class ProductManager {
+    - guitarManager: GuitarManager
+    - effectManager: EffectManager
+    - tunerManager: TunerManager
+    - ampManager: AmpManager
+    - powerSupplyManager: PowersupplyManager
+    - cableManager: CableManager
+    - accessoryManager: AccessoryManager
+    + ProductManager()
+    + ~ProductManager()
+    + saveToFile(): void
+    + loadFromFile(): void
+    + displayMenu(): bool
+    + getGuitarManager(): GuitarManager&
+    + getGuitarManager() const: const GuitarManager&
+    + getEffectManager(): EffectManager&
+    + getEffectManager() const: const EffectManager&
+    + getTunerManager(): TunerManager&
+    + getTunerManager() const: const TunerManager&
+    + getAmpManager(): AmpManager&
+    + getAmpManager() const: const AmpManager&
+    + getPowersupplyManager(): PowersupplyManager&
+    + getPowersupplyManager() const: const PowersupplyManager&
+    + getCableManager(): CableManager&
+    + getCableManager() const: const CableManager&
+    + getAccessoryManager(): AccessoryManager&
+    + getAccessoryManager() const: const AccessoryManager&
+  }
+  class GuitarManager {
+    - guitars: vector~Guitar~
+    + GuitarManager()
+    + loadFromFile(): void
+    + saveToFile() const: void
+    + inputGuitar(): void
+    + deleteGuitar(): void
+    + displayGuitar() const: void
+    + findByCode(code: string) const: Guitar*
+    + findByCode(code: string): Guitar*
+    + displayMenu(): bool
+  }
+  class Guitar {
+    - code: string
+    - model: string
+    - brand: string
+    - type: string
+    - price: int
+    - stock: int
+    + Guitar()
+    + Guitar(code: string, model: string, brand: string, type: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getBrand(): string
+    + getType(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  GuitarManager --> Guitar : manages
+  GuitarManager --> ProductManager
 
-    %% File: clientmanager.h
-    class ClientManager {
-        - std::map<int, Client*> clientList
-        - std::map<int, std::function<void()>> menuActions
-        + void inputClient()
-        + void deleteClient()
-        + void displayAllClients()
-        + void searchClientByName()
-        + Client* findClientById(int)
-        + void loadFromFile()
-        + void saveToFile()
-    }
+  class Effect {
+    - code: string
+    - model: string
+    - brand: string
+    - effectType: string
+    - price: int
+    - stock: int
+    + Effect()
+    + Effect(code: string, model: string, brand: string, effectType: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getBrand(): string
+    + getEffectType(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  class EffectManager {
+    - effects: vector~Effect~
+    + EffectManager()
+    + loadFromFile(): void
+    + saveToFile(): void
+    + inputEffect(): void
+    + deleteEffect(): void
+    + displayEffect(): void
+    + findByCode(code: string): Effect*
+    + findByCode(code: string) const: const Effect*
+    + displayMenu(): bool
+  }
+  EffectManager --> Effect : manages
+  EffectManager --> ProductManager
 
-    %% File: guitarmanager.h
-    class GuitarManager {
-        - std::vector<Guitar*> guitars
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Guitar* findByCode(std::string)
-    }
+  class Accessory {
+    - code: string
+    - model: string
+    - purpose: string
+    - price: int
+    - stock: int
+    + Accessory()
+    + Accessory(code: string, model: string, purpose: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getPurpose(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  class AccessoryManager {
+    - accessories: vector~Accessory~
+    + AccessoryManager()
+    + loadFromFile(): void
+    + saveToFile(): void
+    + inputAccessory(): void
+    + deleteAccessory(): void
+    + displayAccessory(): void
+    + findByCode(code: string): Accessory*
+    + findByCode(code: string) const: const Accessory*
+    + displayMenu(): bool
+  }
+  AccessoryManager --> Accessory : manages
+  AccessoryManager --> ProductManager
 
-    %% File: guitar.h
-    class Guitar {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+  class Amp {
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+    + Amp()
+    + Amp(code: string, model: string, brand: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getBrand(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  class AmpManager {
+    - amps: vector~Amp~
+    + AmpManager()
+    + loadFromFile(): void
+    + saveToFile(): void
+    + inputAmp(): void
+    + deleteAmp(): void
+    + displayAmp(): void
+    + findByCode(code: string): Amp*
+    + findByCode(code: string) const: const Amp*
+    + displayMenu(): bool
+  }
+  AmpManager --> Amp : manages
+  AmpManager --> ProductManager
 
-    %% File: effectmanager.h
-    class EffectManager {
-        - std::vector<Effect*> effects
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Effect* findByCode(std::string)
-    }
+  class Powersupply {
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+    + Powersupply()
+    + Powersupply(code: string, model: string, brand: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getBrand(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  class PowersupplyManager {
+    - powersupplies: vector~Powersupply~
+    + PowersupplyManager()
+    + loadFromFile(): void
+    + saveToFile(): void
+    + inputPowerSupply(): void
+    + deletePowerSupply(): void
+    + displayPowerSupply(): void
+    + findByCode(code: string): Powersupply*
+    + findByCode(code: string) const: const Powersupply*
+    + displayMenu(): bool
+  }
+  PowersupplyManager --> Powersupply : manages
+  PowersupplyManager --> ProductManager
 
-    %% File: effect.h
-    class Effect {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+  class Cable {
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+    + Cable()
+    + Cable(code: string, model: string, brand: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getBrand(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  class CableManager {
+    - cables: vector~Cable~
+    + CableManager()
+    + loadFromFile(): void
+    + saveToFile(): void
+    + inputCable(): void
+    + deleteCable(): void
+    + displayCable(): void
+    + findByCode(code: string): Cable*
+    + findByCode(code: string) const: const Cable*
+    + displayMenu(): bool
+  }
+  CableManager --> Cable : manages
+  CableManager --> ProductManager
 
-    %% File: tunermanager.h
-    class TunerManager {
-        - std::vector<Tuner*> tuners
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Tuner* findByCode(std::string)
-    }
+  class Tuner {
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+    + Tuner()
+    + Tuner(code: string, model: string, brand: string, price: int, stock: int)
+    + getCode(): string
+    + getModel(): string
+    + getBrand(): string
+    + getPrice(): int
+    + getStock(): int
+    + setPrice(price: int): void
+    + setStock(stock: int): void
+    + isStockAvailable(qty: int): bool
+    + reduceStock(qty: int): void
+    + addStock(qty: int): void
+  }
+  class TunerManager {
+    - tuners: vector~Tuner~
+    + TunerManager()
+    + loadFromFile(): void
+    + saveToFile(): void
+    + inputTuner(): void
+    + deleteTuner(): void
+    + displayTuner(): void
+    + findByCode(code: string): Tuner*
+    + findByCode(code: string) const: const Tuner*
+    + displayMenu(): bool
+  }
+  TunerManager --> Tuner : manages
+  TunerManager --> ProductManager
 
-    %% File: tuner.h
+  class Client {
+    - m_id: int
+    - m_name: string
+    - m_phoneNumber: string
+    - m_address: string
+    + Client(id: int, name: string, phone: string, address: string)
+    + getName(): string
+    + setName(name: string): void
+    + getPhoneNumber(): string
+    + setPhoneNumber(phone: string): void
+    + getAddress(): string
+    + setAddress(address: string): void
+    + id(): int
+    + operator==(other: Client): bool
+  }
+
+  %%class ClientSystem::ClientManager {
+  %%ClientSystem::ClientManager
+  class ClientManager {
+    - clientList: map~int, Client*~
+    + ClientManager()
+    + ~ClientManager()
+    + inputClient(): void
+    + addClient(Client*): void
+    + deleteClient(int): void
+    + modifyClient(int): void
+    + makeId(): int
+    + displayInfo(): void
+    + saveToFile(): void
+    + parseCSV(istream&, char): vector~string~
+    + findClientById(int): Client*
+    + findClientByName(name: string): Client*
+    + displayMenu(): bool
+  }
+  ClientManager --> Client : manages
+
+  class Order {
+    - orderId: int
+    - clientId: int
+    - productCode: string
+    - quantity: int
+    - date: string
+    - status: string
+    + Order(orderId: int, clientId: int, productCode: string, quantity: int, date: string, status: string)
+    + getOrderId(): int
+    + getClientId(): int
+    + getProductCode(): string
+    + getQuantity(): int
+    + getDate(): string
+    + getStatus(): string
+    + setStatus(newStatus: string): void
+    + setDate(newDate: string): void
+  }
+
+  class OrderManager {
+    - orders: vector~Order*~
+    - nextOrderId: int
+    - currentBundleOrderId: int
+    + OrderManager()
+    + createOrder(clientId: int, productCode: string, quantity: int, clientManager: ClientManager, productManager: ProductManager): bool
+    + refundOrder(orderId: int, productManager: ProductManager): bool
+    + loadFromFile(): void
+    + saveToFile(): void
+    + showAllOrders(clientManager: ClientManager, productManager: ProductManager): void
+    + getNextOrderId(): int
+    + getTodayDateTime(): string
+    + findOrderById(orderId: int): Order*
+    + startNewOrderBundle(): void
+    + endOrderBundle(): void
+  }
+  OrderManager --> Order : handles
+  OrderManager --> ClientManager : uses
+  OrderManager --> ProductManager : uses
+
+  class GenreStarterSet {
+    - genreNames: map~int, string~
+    - genreConfigs: map~int, GenreConfig~
+    + GenreStarterSet()
+    + displayGenreMenu(clientManager: ClientManager*, productManager: ProductManager*, orderManager: OrderManager*): void
+    - processGenreSelection(genreId: int, clientManager: ClientManager*, productManager: ProductManager*, orderManager: OrderManager*): void
+    - loadGuitarMatches(type: string): void
+    - loadEffectMatches(types: vector~string~): void
+    - createGuitarOrder(clientManager: ClientManager*, productManager: ProductManager*, orderManager: OrderManager*): void
+    - createEffectOrders(types: vector~string~, clientManager: ClientManager*, productManager: ProductManager*, orderManager: OrderManager*): void
+  }
+  GenreStarterSet --> ClientManager : uses
+  GenreStarterSet --> ProductManager : uses
+  GenreStarterSet --> OrderManager : uses
+ */
+
+
+
+
+
+
+
+
+/*
+ *
+ *
+---
+config:
+  theme: default
+  layout: elk
+  class:
+    hideEmptyMembersBox: false
+---
+classDiagram
+direction BT
+
+  %% Client
+  class Client {
+    - m_id: int
+    - m_name: string
+    - m_phoneNumber: string
+    - m_address: string
+    + getName(): string
+    + getPhoneNumber(): string
+    + getAddress(): string
+    + id(): int
+  }
+
+  class ClientManager {
+    - clientList: map~int, Client*~
+    + inputClient(): void
+    + addClient(Client*): void
+    + deleteClient(int): void
+    + displayInfo(): void
+    + findClientById(int): Client*
+    + findClientByName(string): Client*
+  }
+
+  ClientManager --> Client : manages
+
+  %% Product (7종)
+  class Guitar {
+    - code: string
+    - model: string
+    - brand: string
+    - type: string
+    - price: int
+    - stock: int
+  }
+
+  class Effect {
+    - code: string
+    - model: string
+    - brand: string
+    - effectType: string
+    - price: int
+    - stock: int
+  }
+
+  class Accessory {
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+  }
+
     class Tuner {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+  }
 
-    %% File: ampmanager.h
-    class AmpManager {
-        - std::vector<Amp*> amps
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Amp* findByCode(std::string)
-    }
-
-    %% File: amp.h
     class Amp {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+  }
 
-    %% File: powersupplymanager.h
-    class PowersupplyManager {
-        - std::vector<Powersupply*> powersupplies
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Powersupply* findByCode(std::string)
-    }
-
-    %% File: powersupply.h
     class Powersupply {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+  }
 
-    %% File: cablemanager.h
-    class CableManager {
-        - std::vector<Cable*> cables
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Cable* findByCode(std::string)
-    }
-
-    %% File: cable.h
     class Cable {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+    - code: string
+    - model: string
+    - brand: string
+    - price: int
+    - stock: int
+  }
 
-    %% File: accessorymanager.h
-    class AccessoryManager {
-        - std::vector<Accessory*> accessories
-        - std::map<int, std::function<void()>> menuActions
-        + void loadFromFile()
-        + void saveToFile()
-        + Accessory* findByCode(std::string)
-    }
+  class GuitarManager {
+    - guitars: vector~Guitar~
+  }
 
-    %% File: accessory.h
-    class Accessory {
-        - std::string code
-        - std::string model
-        - std::string brand
-        - int price
-        - int stock
-        + std::string getCode()
-        + std::string getModel()
-        + std::string getBrand()
-        + int getPrice()
-        + int getStock()
-    }
+  class EffectManager {
+    - effects: vector~Effect~
+  }
 
-    %% File: productmanager.h
-    class ProductManager {
-        - GuitarManager guitarMgr
-        - EffectManager effectMgr
-        - TunerManager tunerMgr
-        - AmpManager ampMgr
-        - PowersupplyManager powersupplyMgr
-        - CableManager cableMgr
-        - AccessoryManager accessoryMgr
-        + GuitarManager& getGuitarManager()
-        + EffectManager& getEffectManager()
-        + TunerManager& getTunerManager()
-        + AmpManager& getAmpManager()
-        + PowersupplyManager& getPowersupplyManager()
-        + CableManager& getCableManager()
-        + AccessoryManager& getAccessoryManager()
-    }
+  class TunerManager {
+    - tuners: vector~Tuner~
+  }
 
-    %% File: order.h
+  class AmpManager {
+    - amps: vector~Amp~
+  }
+
+  class PowersupplyManager {
+    - powersupplies: vector~Powersupply~
+  }
+
+  class CableManager {
+    - cables: vector~Cable~
+  }
+
+  class AccessoryManager {
+    - accessories: vector~Accessory~
+  }
+
+  GuitarManager --> Guitar : manages
+  EffectManager --> Effect : manages
+  TunerManager --> Tuner : manages
+  AmpManager --> Amp : manages
+  PowersupplyManager --> Powersupply : manages
+  CableManager --> Cable : manages
+  AccessoryManager --> Accessory : manages
+
+  class ProductManager {
+    - guitarManager: GuitarManager
+    - effectManager: EffectManager
+    - tunerManager: TunerManager
+    - ampManager: AmpManager
+    - powerSupplyManager: PowersupplyManager
+    - cableManager: CableManager
+    - accessoryManager: AccessoryManager
+    + getGuitarManager(): GuitarManager&
+    + getEffectManager(): EffectManager&
+  }
+
+  ProductManager --> GuitarManager : includes
+  ProductManager --> EffectManager : includes
+  ProductManager --> TunerManager : includes
+  ProductManager --> AmpManager : includes
+  ProductManager --> PowersupplyManager : includes
+  ProductManager --> CableManager : includes
+  ProductManager --> AccessoryManager : includes
+
+  %% Order
+  class Order {
+    - orderId: int
+    - clientId: int
+    - productCode: string
+    - quantity: int
+    - date: string
+    - status: string
+  }
+
+  class OrderManager {
+    - orders: vector~Order*~
+    + createOrder(...)
+    + refundOrder(...)
+    + showAllOrders(...)
+    + loadFromFile(): void
+  }
+
+  OrderManager --> Order : manages
+  OrderManager --> ClientManager : uses
+  OrderManager --> ProductManager : uses
+
+  %% GenreStarter
+  class GenreStarterSet {
+    - genreNames: map~int, string~
+    - genreConfigs: map~int, GenreConfig~
+    + displayGenreMenu(...)
+  }
+
+  GenreStarterSet --> ClientManager : uses
+  GenreStarterSet --> ProductManager : uses
+  GenreStarterSet --> OrderManager : uses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+*/
+
+/*
+ *
+ *
+ *
+ *
+classDiagram
+  class Client {
+    - m_id: int
+    - m_name: string
+    - m_phoneNumber: string
+    - m_address: string
+    + getName(): string
+    + getPhoneNumber(): string
+    + getAddress(): string
+    + id(): int
+  }
+
+  class ClientManager {
+    - clientList: map~int, Client*~
+    + inputClient(): void
+    + addClient(Client*): void
+    + deleteClient(int): void
+    + findClientById(int): Client*
+    + findClientByName(string): Client*
+  }
+
+  ClientManager --> Client : manages
+
+
+  class ProductManager {
+    - guitarManager: GuitarManager
+    - effectManager: EffectManager
+    - tunerManager: TunerManager
+    - ampManager: AmpManager
+    - powerSupplyManager: PowersupplyManager
+    - cableManager: CableManager
+    - accessoryManager: AccessoryManager
+  }
+
+  ProductManager --> GuitarManager : includes
+  ProductManager --> EffectManager : includes
+  ProductManager --> TunerManager : includes
+  ProductManager --> AmpManager : includes
+  ProductManager --> PowersupplyManager : includes
+  ProductManager --> CableManager : includes
+  ProductManager --> AccessoryManager : includes
+
+  GuitarManager --> Guitar : manages
+  EffectManager --> Effect : manages
+  TunerManager --> Tuner : manages
+  AmpManager --> Amp : manages
+  PowersupplyManager --> Powersupply : manages
+  CableManager --> Cable : manages
+  AccessoryManager --> Accessory : manages
+
     class Order {
-        - int orderId
-        - int clientId
-        - std::string productCode
-        - int quantity
-        - std::string date
-        - std::string status
-        + int getOrderId()
-        + int getClientId()
-        + std::string getProductCode()
-        + int getQuantity()
-        + std::string getDate()
-        + std::string getStatus()
-        + void setDate(std::string)
-        + void setStatus(std::string)
-    }
+    - orderId: int
+    - clientId: int
+    - productCode: string
+    - quantity: int
+    - date: string
+    - status: string
+  }
 
-    %% File: ordermanager.h
-    class OrderManager {
-        - std::vector<Order*> orders
-        - int nextOrderId
-        - int currentBundleOrderId
-        - std::map<int, std::function<void()>> menuActions
-        + void startNewOrderBundle()
-        + void endOrderBundle()
-        + bool createOrder(int, std::string, int, ClientManager&, ProductManager&)
-        + bool refundOrder(int, ProductManager&)
-        + void showAllOrders(const ClientManager&, const ProductManager&)
-    }
+  class OrderManager {
+    - orders: vector~Order*~
+    + createOrder(...)
+    + refundOrder(...)
+    + showAllOrders(...)
+  }
 
-    %% File: main.cpp
-    class MainApp {
-        + int main()
-    }
+  OrderManager --> Order : manages
+  OrderManager --> ClientManager : uses
+  OrderManager --> ProductManager : uses
 
-    %% Relationships
-    ClientManager --> Client : manages
-    ProductManager --> GuitarManager
-    ProductManager --> EffectManager
-    ProductManager --> TunerManager
-    ProductManager --> AmpManager
-    ProductManager --> PowersupplyManager
-    ProductManager --> CableManager
-    ProductManager --> AccessoryManager
+  class GenreStarterSet {
+    - genreNames: map~int, string~
+    - genreConfigs: map~int, GenreConfig~
+    + displayGenreMenu(...)
+  }
 
-    GuitarManager --> Guitar : manages
-    EffectManager --> Effect : manages
-    TunerManager --> Tuner : manages
-    AmpManager --> Amp : manages
-    PowersupplyManager --> Powersupply : manages
-    CableManager --> Cable : manages
-    AccessoryManager --> Accessory : manages
-
-    OrderManager --> Order : handles
-    OrderManager --> ClientManager : uses
-    OrderManager --> ProductManager : uses
-
-    MainApp --> ClientManager
-    MainApp --> ProductManager
-    MainApp --> OrderManager
-*/
-
-
-
-
-
-/*
- *
----
-config:
-  theme: default
-  layout: elk
-  class:
-    hideEmptyMembersBox: false
----
-classDiagram
-direction BT
-
-%% ProductManager
-class ProductManager {
-  - guitarManager: GuitarManager
-  - effectManager: EffectManager
-  - accessoryManager: AccessoryManager
-  - ampManager: AmpManager
-  - powerSupplyManager: PowerSupplyManager
-  - cableManager: CableManager
-  - tunerManager: TunerManager
-  + saveToFile(filename): void
-  + loadFromFile(filename): void
-  + applyDiscountToProduct(code, percent): void
-  + formatStockWithComma(): void
-}
-
-%% Guitar (Merged)
-class GuitarManager {
-  - guitars: vector~Guitar~
-  + inputGuitar(): void
-  + deleteGuitar(): void
-  + findGuitarByCode(code): Guitar
-  + applyDiscount(code, percent): void
-}
-class Guitar {
-  +code: string
-  +model: string
-  +brand: string
-  +type: string
-  +price: int
-  +stock: int
-  +getCode(): string
-  +getModel(): string
-  +getBrand(): string
-  +getType(): string
-  +getPrice(): int
-  +getStock(): int
-}
-GuitarManager --> Guitar
-GuitarManager --> ProductManager
-
-%% Effect (Merged)
-class EffectManager {
-  - effects: vector~Effect~
-  + inputEffect(): void
-  + deleteEffect(): void
-  + findEffectByCode(code): Effect
-  + applyDiscount(code, percent): void
-}
-class Effect {
-  +code: string
-  +model: string
-  +brand: string
-  +effectType: string
-  +price: int
-  +stock: int
-  +getCode(): string
-  +getModel(): string
-  +getBrand(): string
-  +getEffectType(): string
-  +getPrice(): int
-  +getStock(): int
-}
-EffectManager --> Effect
-EffectManager --> ProductManager
-
-%% Accessory
-class AccessoryManager {
-  - accessories: vector~Accessory~
-  + inputAccessory(): void
-  + deleteAccessory(): void
-  + findAccessoryByPurpose(purpose): Accessory
-}
-class Accessory {
-  - code: string
-  - model: string
-  - purpose: string
-  - price: int
-  - stock: int
-  +getCode(): string
-  +getModel(): string
-  +getPurpose(): string
-  +getPrice(): int
-  +getStock(): int
-}
-AccessoryManager --> Accessory
-AccessoryManager --> ProductManager
-
-%% Amp
-class AmpManager {
-  - amps: vector~Amp~
-  + inputAmp(): void
-  + deleteAmp(): void
-  + findAmpByCode(code): Amp
-}
-class Amp {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  +getCode(): string
-  +getModel(): string
-  +getBrand(): string
-  +getPrice(): int
-  +getStock(): int
-}
-AmpManager --> Amp
-AmpManager --> ProductManager
-
-%% PowerSupply
-class PowerSupplyManager {
-  - powerSupplies: vector~PowerSupply~
-  + inputPowerSupply(): void
-  + deletePowerSupply(): void
-  + findPowerSupplyByCode(code): PowerSupply
-}
-class PowerSupply {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  +getCode(): string
-  +getModel(): string
-  +getBrand(): string
-  +getPrice(): int
-  +getStock(): int
-}
-PowerSupplyManager --> PowerSupply
-PowerSupplyManager --> ProductManager
-
-%% Cable
-class CableManager {
-  - cables: vector~Cable~
-  + inputCable(): void
-  + deleteCable(): void
-  + findCableByCode(code): Cable
-}
-class Cable {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  +getCode(): string
-  +getModel(): string
-  +getBrand(): string
-  +getPrice(): int
-  +getStock(): int
-}
-CableManager --> Cable
-CableManager --> ProductManager
-
-%% Tuner
-class TunerManager {
-  - tuners: vector~Tuner~
-  + inputTuner(): void
-  + deleteTuner(): void
-  + findTunerByCode(code): Tuner
-}
-class Tuner {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  +getCode(): string
-  +getModel(): string
-  +getBrand(): string
-  +getPrice(): int
-  +getStock(): int
-}
-TunerManager --> Tuner
-TunerManager --> ProductManager
-
-%% Client
-class ClientManager {
-  - clientList: map~int, Client~
-  + inputClient(): void
-  + inputClient(Client): void
-  + deleteClient(): void
-  + findClientById(id): Client
-}
-class Client {
-  - id: int
-  - name: string
-  - phone: string
-  - address: string
-  + getId(): int
-  + getName(): string
-  + getPhoneNumber(): string
-  + getAddress(): string
-}
-ClientManager --> Client
-
-%% Order
-class Order {
-  - orderId: int
-  - clientId: int
-  - clientName: string
-  - productCode: string
-  - quantity: int
-  - date: string
-  - status: string
-  + isRefunded(): bool
-  + isPurchased(): bool
-  + updateDate(): void
-}
-class OrderManager {
-  - orderList: vector~Order~
-  - orderCounter: int
-  + createOrder(): void
-  + createOrder(Client, Product): void
-  + refundOrder(): void
-  + listOrders(): void
-  + checkStock(): bool
-}
-OrderManager --> Order
-Order --> Client
-Order ..> ProductManager : references
-
-%% GenreStarterSet
-class GenreStarterSet {
-  +genre: string
-  +guitarType: string
-  +effectTypes: vector~string~
-  +starterSetId: string
-  +saveToFile(): void
-  +loadFromFile(): void
-  +searchByGenre(genre): GenreStarterSet
-  +searchByGuitarType(type): GenreStarterSet
-}
-Order --> GenreStarterSet : includes
- *
- * /
-
-/*
----
-config:
-  theme: default
-  layout: elk
-  class:
-    hideEmptyMembersBox: false
----
-classDiagram
-direction BT
-
-%% ProductManager
-class ProductManager {
-  - guitarMgr: GuitarManager
-  - effectMgr: EffectManager
-  - tunerMgr: TunerManager
-  - ampMgr: AmpManager
-  - powersupplyMgr: PowersupplyManager
-  - cableMgr: CableManager
-  - accessoryMgr: AccessoryManager
-  + getGuitarManager(): GuitarManager
-  + getEffectManager(): EffectManager
-  + getTunerManager(): TunerManager
-  + getAmpManager(): AmpManager
-  + getPowersupplyManager(): PowersupplyManager
-  + getCableManager(): CableManager
-  + getAccessoryManager(): AccessoryManager
-}
-%% Guitar (Merged)
-class GuitarManager {
-  - guitars: vector~Guitar~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Guitar
-}
-class Guitar {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-GuitarManager --> Guitar
-GuitarManager --> ProductManager
-
-%% Effect (Merged)
-class EffectManager {
-  - effects: vector~Effect~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Effect
-}
-class Effect {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-class EffectManager {
-  - effects: vector~Effect~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Effect
-}
-EffectManager --> Effect
-EffectManager --> ProductManager
-
-
-%% Accessory
-class AccessoryManager {
-  - accessories: vector~Accessory~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Accessory
-}
-class Accessory {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-AccessoryManager --> Accessory
-AccessoryManager --> ProductManager
-
-%% Amp
-class AmpManager {
-  - amps: vector~Amp~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Amp
-}
-class Amp {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-AmpManager --> Amp
-AmpManager --> ProductManager
-
-%% PowerSupply
-class PowersupplyManager {
-  - powersupplies: vector~Powersupply~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Powersupply
-}
-class Powersupply {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-PowerSupplyManager --> PowerSupply
-PowerSupplyManager --> ProductManager
-
-%% Cable
-class CableManager {
-  - cables: vector~Cable~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Cable
-}
-class Cable {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-CableManager --> Cable
-CableManager --> ProductManager
-
-%% Tuner
-class TunerManager {
-  - tuners: vector~Tuner~
-  - menuActions: map~int, function<void()>~
-  + loadFromFile(): void
-  + saveToFile(): void
-  + findByCode(string): Tuner
-}
-class Tuner {
-  - code: string
-  - model: string
-  - brand: string
-  - price: int
-  - stock: int
-  + getCode(): string
-  + getModel(): string
-  + getBrand(): string
-  + getPrice(): int
-  + getStock(): int
-}
-TunerManager --> Tuner
-TunerManager --> ProductManager
-
-%% Client
-class ClientManager {
-  - clientList: map~int, Client~
-  - menuActions: map~int, function<void()>~
-  + inputClient(): void
-  + deleteClient(): void
-  + displayAllClients(): void
-  + searchClientByName(): void
-  + findClientById(int): Client
-  + loadFromFile(): void
-  + saveToFile(): void
-}
-class Client {
-  - id: int
-  - name: string
-  - phoneNumber: string
-  - address: string
-  + getId(): int
-  + getName(): string
-  + getPhoneNumber(): string
-  + getAddress(): string
-}
-ClientManager --> Client
-
-%% Order
-class Order {
-  - orderId: int
-  - clientId: int
-  - productCode: string
-  - quantity: int
-  - date: string
-  - status: string
-  + getOrderId(): int
-  + getClientId(): int
-  + getProductCode(): string
-  + getQuantity(): int
-  + getDate(): string
-  + getStatus(): string
-  + setDate(string): void
-  + setStatus(string): void
-}
-class OrderManager {
-  - orders: vector~Order~
-  - nextOrderId: int
-  - currentBundleOrderId: int
-  - menuActions: map~int, function<void()>~
-  + startNewOrderBundle(): void
-  + endOrderBundle(): void
-  + createOrder(int, string, int, ClientManager, ProductManager): bool
-  + refundOrder(int, ProductManager): bool
-  + showAllOrders(ClientManager, ProductManager): void
-}
-OrderManager --> Order
-Order --> Client
-Order ..> ProductManager : references
-
-%% GenreStarterSet
-class GenreStarterSet {
-  - genreNames: map~int, string~
-  - genreConfigs: map~int, GenreConfig~
-  + displayGenreMenu(ClientManager*, ProductManager*, OrderManager*): void
-}
-GenreStarterSet --> ClientManager : uses
-GenreStarterSet --> ProductManager : uses
-GenreStarterSet --> OrderManager : uses
-*/
-
-/*
- *
- *
-cmake_minimum_required(VERSION 3.16)
-project(miniProj01)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# include headers
-include_directories(${PROJECT_SOURCE_DIR}/header)
-
-# collect source files
-file(GLOB_RECURSE SOURCES "source/*.cpp")
-
-# create executable
-add_executable(mP01 main.cpp ${SOURCES})
+  GenreStarterSet --> ClientManager : uses
+  GenreStarterSet --> ProductManager : uses
+  GenreStarterSet --> OrderManager : uses
  *
  *
  *
  *
  *
- *
- *
- *
-*/
+ */
