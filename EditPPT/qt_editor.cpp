@@ -11,7 +11,7 @@ qt_editor::qt_editor(QWidget *parent)
     setMenuBar(menubar);
 
 #if 0
-    QAction *newAct = new QAction(QIcon("Icon_New_File.png"), "&New", this);
+    QAction *newAct = new QAction(QIcon("./images/Icon_New_File.png"), "&New", this);
     newAct->setShortcut(tr("Ctrl+N"));
     newAct->setStatusTip(tr("make new file"));
     connect(newAct, SIGNAL(triggered()),SLOT(newFile()));
@@ -19,45 +19,45 @@ qt_editor::qt_editor(QWidget *parent)
     QAction *quitAct=new QAction("&Quit", this);
     connect(quitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
 #else
-    QAction *newAct=makeAction("Icon_New_File.png", "&New", "Ctrl+N", \
+    QAction *newAct=makeAction("./images/Icon_New_File.png", "&New", "Ctrl+N", \
                                  "make new file", this, SLOT(newFile()));
 #endif
-    QAction *openAct=makeAction("Icon_Open_File.png", "&Open", "Ctrl+O", \
+    QAction *openAct=makeAction("./images/Icon_Open_File.png", "&Open", "Ctrl+O", \
                                   "open a file", this, SLOT(openFile( )));
 
-    QAction *saveAct=makeAction("Icon_Save_File.png", "&Save", "Ctrl+S", \
+    QAction *saveAct=makeAction("./images/Icon_Save_File.png", "&Save", "Ctrl+S", \
                                   "save this file", this, SLOT(saveFile()));
 
-    QAction *saveAsAct = makeAction("Icon_SaveAs_File.png", "&Save &as...", "Ctrl+Shift+S", \
+    QAction *saveAsAct = makeAction("./images/Icon_SaveAs_File.png", "&Save &as...", "Ctrl+Shift+S", \
                                     "save this file as a new name", this, SLOT(saveAsFile( )));
 
-    QAction *printAct = makeAction("Icon_Print_File.png", "&Print", "Ctrl+P", \
+    QAction *printAct = makeAction("./images/Icon_Print_File.png", "&Print", "Ctrl+P", \
                                    "print this file", this, SLOT(print( )));
 
-    QAction *quitAct = makeAction("Icon_Quit_File.png", "&Quit", "Ctrl+Q", \
+    QAction *quitAct = makeAction("./images/Icon_Quit_File.png", "&Quit", "Ctrl+Q", \
                                   "quit this program", qApp, SLOT(quit( )));
 
     /* Edit Menu */
-    QAction *undoAct = makeAction("Icon_Undo_File.png", "&Undo", "Ctrl+Z", \
+    QAction *undoAct = makeAction("./images/Icon_Undo_File.png", "&Undo", "Ctrl+Z", \
                                   "Undo", textedit, SLOT(undo( )));
-    QAction *redoAct = makeAction("Icon_Redo_File.png", "&Redo", "Ctrl+Shift+Z", \
+    QAction *redoAct = makeAction("./images/Icon_Redo_File.png", "&Redo", "Ctrl+Shift+Z", \
                                   "Redo", textedit, SLOT(redo( )));
-    QAction *copyAct = makeAction("Icon_Copy_File.png", "&Copy", "Ctrl+C", \
+    QAction *copyAct = makeAction("./images/Icon_Copy_File.png", "&Copy", "Ctrl+C", \
                                   "Copy", textedit, SLOT(copy( )));
-    QAction *cutAct = makeAction("Icon_Cut_File.png", "C&ut", "Ctrl+X", \
+    QAction *cutAct = makeAction("./images/Icon_Cut_File.png", "C&ut", "Ctrl+X", \
                                  "Cut", textedit, SLOT(cut( )));
-    QAction *pasteAct = makeAction("Icon_Paste_File.png", "&Paste", "Ctrl+V", \
+    QAction *pasteAct = makeAction("./images/Icon_Paste_File.png", "&Paste", "Ctrl+V", \
                                    "Paste", textedit, SLOT(paste( )));
-    QAction *zoomInAct = makeAction("Icon_ZoomIn_File.png", "Zoom &in", "Ctrl+=", \
+    QAction *zoomInAct = makeAction("./images/Icon_ZoomIn_File.png", "Zoom &in", "Ctrl+=", \
                                     "Zoom In", textedit, SLOT(zoomIn( )));
-    QAction *zoomOutAct = makeAction("Icon_ZoomOut_File.png", "Zoon &out", "Ctrl+-", \
+    QAction *zoomOutAct = makeAction("./images/Icon_ZoomOut_File.png", "Zoon &out", "Ctrl+-", \
                                      "Zoom Out", textedit, SLOT(zoomOut( )));
 
 /*  // QKeySequence 사용 시, 함수의 인자가 QString 아니어서 함수 오버로딩 또는 템플릿 필요
-    QAction*newAct=makeAction("Icon_New_File.png", tr("&New"), QKeySequence::New, \
+    QAction*newAct=makeAction("./images/Icon_New_File.png", tr("&New"), QKeySequence::New, \
                                  tr("make new file"), this, SLOT(newFile()));
 
-    QAction*quitAct=makeAction("Icon_Quit_File.png", tr("&Quit"), tr("Ctrl+Q"), \
+    QAction*quitAct=makeAction("./images/Icon_Quit_File.png", tr("&Quit"), tr("Ctrl+Q"), \
                                  tr("Quit this program"), qApp, SLOT(quit()));
 */
 //*/
@@ -83,17 +83,17 @@ qt_editor::qt_editor(QWidget *parent)
     editMenu->addAction(zoomOutAct);
 
     /* Format Menu */
-    QAction *fontAct = makeAction("Icon_Font_File.png", "&Font", "Ctrl+F", \
+    QAction *fontAct = makeAction("./images/Icon_Font_File.png", "&Font", "Ctrl+F", \
                                   "Font", this, SLOT(setFont( )));
-    QAction *colorAct = makeAction("Icon_Color_File.png", "C&olor", "Ctrl+G", \
+    QAction *colorAct = makeAction("./images/Icon_Color_File.png", "C&olor", "Ctrl+G", \
                                    "Color", this, SLOT(setColor( )));
-    QAction *alignLeftAct = makeAction("Icon_Left_File.png", "&Left", "Ctrl+1", \
+    QAction *alignLeftAct = makeAction("./images/Icon_Left_File.png", "&Left", "Ctrl+1", \
                                        "Left", this, SLOT(alignText( )));
-    QAction *alignCenterAct = makeAction("Icon_Center_File.png", "&Center", "Ctrl+2", \
+    QAction *alignCenterAct = makeAction("./images/Icon_Center_File.png", "&Center", "Ctrl+2", \
                                          "Center", this, SLOT(alignText( )));
-    QAction *alignRightAct = makeAction("Icon_Right_File.png", "&Right", "Ctrl+3", \
+    QAction *alignRightAct = makeAction("./images/Icon_Right_File.png", "&Right", "Ctrl+3", \
                                         "Right", this, SLOT(alignText( )));
-    QAction *alignJustifyAct = makeAction("Icon_Justify_File.png", "&Justify", "Ctrl+4", \
+    QAction *alignJustifyAct = makeAction("./images/Icon_Justify_File.png", "&Justify", "Ctrl+4", \
                                           "Justify", this, SLOT(alignText( )));
 
     QToolBar *fileToolBar = addToolBar("&File");
@@ -158,7 +158,7 @@ qt_editor::qt_editor(QWidget *parent)
     formatMenu->addAction(editToolBar->toggleViewAction( ));
 */
     QMenu *alignMenu = formatMenu->addMenu("&Align");
-    alignMenu->setIcon(QIcon("Icon_Align_File.png"));
+    alignMenu->setIcon(QIcon("./images/Icon_Align_File.png"));
     alignMenu->addAction(alignLeftAct);
     alignMenu->addAction(alignCenterAct);
     alignMenu->addAction(alignRightAct);
