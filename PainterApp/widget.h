@@ -14,6 +14,5 @@ public:
 protected:
     void paintEvent(QPaintEvent *event)
 override;
-
 };
 #endif // WIDGET_H
