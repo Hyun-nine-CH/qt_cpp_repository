@@ -34,7 +34,7 @@ Widget::Widget(QWidget *parent)
     message->setReadOnly(true);
 
     inputLine=new QLineEdit(this);
-    QPushButton *senButton=new QPushButton("Send",this);
+    QPushButton *sentButton=new QPushButton("Send",this);
     connect(sentButton,SIGNAL(clicked()),SLOT(sendData()));
 
     QHBoxLayout *inputLayout=new QHBoxLayout;
@@ -56,8 +56,8 @@ Widget::Widget(QWidget *parent)
 
     setLayout(mainLayout);
 
-    clientSock=new QTcpSocket(this);
-    connect(clientSocket, &QAbstractSocket::errorOccurred, [=]{1Debug()<<clientSocket->errorString();});
+    clientSocket=new QTcpSocket(this);
+    connect(clientSocket, &QAbstractSocket::errorOccurred, [=]{qDebug()<<clientSocket->errorString();});
     connect(clientSocket,SIGNAL(readyRead()),SLOT(echoData()));
     setWindowTitle(tr("Echo Çlient"));
 }
@@ -74,8 +74,9 @@ void Widget::echoData() {
 }
 void Widget::sendData() {
     QString str = inputLine->text();
-    if(str.length());
-    QByteArray bytearray;
-    bytearray=str.toUtf8();
-    clientSocket->write(bytearray);
+    if(str.length()) {
+        QByteArray bytearray;
+        bytearray=str.toUtf8();
+        clientSocket->write(bytearray);
+    }
 }

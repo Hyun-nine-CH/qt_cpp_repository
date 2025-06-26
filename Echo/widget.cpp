@@ -9,7 +9,7 @@ Widget::Widget(QWidget *parent)
 {
     infoLabel=new QLabel(this);
     QPushButton *quitButton=new QPushButton("Quit",this);
-    connect(quitButton,SiGNAL(clicked()),qApp,SLOT(quit()));
+    connect(quitButton,SIGNAL(clicked()),qApp,SLOT(quit()));
 
     QHBoxLayout *buttonLayout=new QHBoxLayout;
     buttonLayout->addStretch(1);
@@ -22,7 +22,7 @@ Widget::Widget(QWidget *parent)
     setLayout(mainLayout);
 
     tcpServer=new QTcpServer(this);
-    connect(tcpServer,SIFNAL(newConnection()),SLOT(clientConnect()));
+    connect(tcpServer,SIGNAL(newConnection()),SLOT(clientConnect()));
     if(!tcpServer->listen()) {
         QMessageBox::critical(this,tr("Echo Server"), tr("Unable to start the server: %1.").arg(tcpServer->errorString()));
         close();
