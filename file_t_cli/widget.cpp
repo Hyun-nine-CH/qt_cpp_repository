@@ -76,10 +76,11 @@ void Widget::openFile() {
 }
 void Widget::sendData() {
     openFile();
-    if(isSent) {
+    if(!filename.length()) return;
+    if(!isSent) {
         tcpClient->connectToHost(QHostAddress("127.0.0.1"),8100);
         isSent=true;
     }
-    send();
+    //send();
     infoLabel->setText(tr("sending file %1").arg(filename));
 }

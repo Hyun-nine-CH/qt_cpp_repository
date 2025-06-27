@@ -14,10 +14,7 @@ Widget::Widget(QWidget *parent)
 {
     infoLabel=new QLabel("Hello, World",this);
 
-    QPushButton* button=new QPushButton("Server Start", this);
-    connect(button, SIGNAL(clicked()),SLOT(clickButton()));
-
-    QHBoxLayout *layout=new QPushButton("Server Start", this);
+    QPushButton *button=new QPushButton("Server Start", this);
     connect(button, SIGNAL(clicked()),SLOT(clickButton()));
 
     QHBoxLayout *layout=new QHBoxLayout(this);
