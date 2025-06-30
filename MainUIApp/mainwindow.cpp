@@ -12,3 +12,12 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+#include <QTextEdit>
+void MainWindow::on_actionNew_triggered()
+{
+    QTextEdit* textedit=new QTextEdit;
+    ui->mdiArea->addSubWindow(textedit);
+    textedit->show();
+}
+
