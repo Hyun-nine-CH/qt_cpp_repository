@@ -29,8 +29,8 @@ Widget::Widget(QWidget *parent)
     localAddress.setAddress("225.0.02");
     m_udpSocket->bind(QHostAddress::AnyIPv4,45454,QUdpSocket::ShareAddress);
     m_udpSocket->joinMulticastGroup(localAddress);
-    m_udpSocket->setSocketOption(QAbstractSocket::MulticastTtIOption,1);
-}
+    m_udpSocket->setSocketOption(QAbstractSocket::MulticastTtlOption,1);
+} // time to Live
 
 Widget::~Widget() {}
 
@@ -44,7 +44,7 @@ void Widget::sendData() {
     quint16 port = 45454;
     m_udpSocket->writeDatagram(data,localAddress,port);
 }
-void Widget::progressPendingDatagrams() {
+void Widget::processPendingDatagrams() {
     QNetworkDatagram datagram=m_udpSocket->receiveDatagram();
     qDebug()<<"Message From::"<<datagram.senderAddress().toString();
     qDebug()<<"Port From::"<<datagram.senderPort();
