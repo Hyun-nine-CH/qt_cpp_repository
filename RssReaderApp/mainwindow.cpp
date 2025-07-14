@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     QToolBar *toolbar=addToolBar(tr("Open"));
 
     combo=new QComboBox;
+    ListView *Iv=new ListView;
+    combo->setView(Iv);
+    combo->setEditable(true);
+
+    combo=new QComboBox;
     combo->setEditable(true);
     combo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     connect(combo, SIGNAL(activated(int)), SLOT(openRssFeed()));
@@ -33,4 +38,16 @@ void MainWindow::openRssFeed() {
 void MainWindow::replyFinished(QNetworkReply* netReply) {
     QString str(netReply->readAll());
     qDebug("%s", qPrintable(str));
+}
+
+void ListView::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_Delete){
+        event->accept();
+        QModelIndexList I= selectedIndexes();
+        if(I.length()>0) {
+            model()->removeRow(I.at(0).row(), I.at(0).parent());
+        }
+    }else{
+        QListView::keyPressEvent(event);
+    }
 }

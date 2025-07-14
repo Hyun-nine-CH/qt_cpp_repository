@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QComboBox>
 #include <QNetworkReply>
+#include <QListView>
 
 class MainWindow : public QMainWindow
 {
@@ -19,4 +20,12 @@ private:
     QComboBox *combo;
     QNetworkAccessManager *manager;
 };
+
+class ListView : public QListView {
+    Q_OBJECT
+
+protected:
+    void keyPressEvent(QKeyEvent*event) override;
+};
+
 #endif // MAINWINDOW_H
