@@ -6,6 +6,7 @@
 
 #include <QDomDocument>
 #include <QDomNodeList>
+#include <QWebEngineHistory>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -26,6 +27,14 @@ MainWindow::MainWindow(QWidget *parent)
     act->setIcon(style()->standardIcon(QStyle::SP_BrowserReload));
     connect(act,SIGNAL(triggered()),SLOT(openRssFeed()));
     toolbar->addAction(act);
+
+    QAction *backAction = new QAction("뒤로가기", this);
+    backAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_B));  // Ctrl + B 단축키
+    toolbar->addAction(backAction);
+    connect(backAction, &QAction::triggered, this, [=]() {
+        if (webView->history()->canGoBack())
+            webView->back();
+    });
 
     listView=new QListView;
     connect(listView, SIGNAL(doubleClicked(QModelIndex)),
