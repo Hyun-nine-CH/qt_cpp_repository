@@ -6,6 +6,8 @@
 #include <QNetworkReply>
 #include <QListView>
 
+#include <QStandardItemModel>
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -16,9 +18,13 @@ public:
 public slots:
     void openRssFeed();
     void replyFinished(QNetworkReply*);
+    void listViewDoubleClicked(const QModelIndex & index);
 private:
     QComboBox *combo;
     QNetworkAccessManager *manager;
+
+    QListView *listView;
+    QStandardItemModel *model;
 };
 
 class ListView : public QListView {
