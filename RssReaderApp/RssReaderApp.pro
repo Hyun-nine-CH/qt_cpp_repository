@@ -1,6 +1,6 @@
 QT       += core gui network xml
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webenginewidgets
 
 CONFIG += c++17
 

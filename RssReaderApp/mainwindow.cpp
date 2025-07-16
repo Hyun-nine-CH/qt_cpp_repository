@@ -8,8 +8,7 @@
 #include <QDomNodeList>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-{
+    : QMainWindow(parent) {
     QToolBar *toolbar=addToolBar(tr("Open"));
 
     combo=new QComboBox;
@@ -34,8 +33,16 @@ MainWindow::MainWindow(QWidget *parent)
     model=new QStandardItemModel(0,1,this);
     listView->setModel(model);
 
+    progress=new QProgressBar(this);
+    statusBar()->addPermanentWidget(progress);
+
+    webView=new QWebEngineView(this);
+    webView->load(QUrl("about:blank"));
+    connect(webView, SIGNAL(loadProgress(int)),progress,SLOT(setValue(int)));
+
     QSplitter *splitter=new QSplitter;
     splitter->addWidget(listView);
+    splitter->addWidget(webView);
     this->setCentralWidget(splitter);
 
     QLibrary lib("SaveUrls");
@@ -89,6 +96,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::listViewDoubleClicked(const QModelIndex &index) {
+    QString strLink=index.data(Qt::UserRole).toString();
+    webView->load(QUrl(strLink));
     qDebug("listViewDoubleClicked");
 }
 
@@ -101,7 +110,10 @@ void MainWindow::openRssFeed() {
         combo->setCurrentIndex(combo->count()-1);
     }
 
-    manager->get(QNetworkRequest(QUrl(combo->currentText())));
+//    manager->get(QNetworkRequest(QUrl(combo->currentText())));
+    QNetworkReply *reply=manager->get(QNetworkRequest(QUrl(combo->currentText())));
+    connect(reply,SIGNAL(downloadProgress(qint64,qint64)),
+            SLOT(downloadProgress(qint64,qint64)));
 }
 
 void MainWindow::replyFinished(QNetworkReply* netReply) {
@@ -117,6 +129,7 @@ void MainWindow::replyFinished(QNetworkReply* netReply) {
         QDomDocument doc;
         QString error;
         if(!doc.setContent(str,false,&error)) {
+            webView->setHtml(QString("<h1>Error</h1>") + error);
             qDebug("Error");
         }else{
             QDomElement docElem=doc.documentElement();
@@ -155,5 +168,16 @@ void ListView::keyPressEvent(QKeyEvent *event) {
         }
     }else{
         QListView::keyPressEvent(event);
+    }
+}
+
+void MainWindow::downloadProgress(qint64 bytes, qint64 bytesTotal) {
+    if (bytesTotal==-1) {
+        progress->setMinimum(0);
+        progress->setMaximum(0);
+    }else{
+        progress->setMaximum(100);
+        int percent=bytes*100/bytesTotal;
+        progress->setValue(percent);
     }
 }

@@ -8,6 +8,9 @@
 
 #include <QStandardItemModel>
 
+#include <QProgressBar>
+#include <QWebEngineView>
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -19,12 +22,16 @@ public slots:
     void openRssFeed();
     void replyFinished(QNetworkReply*);
     void listViewDoubleClicked(const QModelIndex & index);
+    void downloadProgress(qint64 bytes, qint64 bytesTotal);
 private:
     QComboBox *combo;
     QNetworkAccessManager *manager;
 
     QListView *listView;
     QStandardItemModel *model;
+
+    QWebEngineView *webView;
+    QProgressBar *progress;
 };
 
 class ListView : public QListView {
